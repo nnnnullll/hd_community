@@ -1,0 +1,32 @@
+#配置项目名称test
+spring:
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 100MB
+            max-request-size: 1000MB
+    #数据库连接
+    datasource:
+        username: root
+        password: 123456
+        url: jdbc:mysql://localhost:3306/community?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull
+        driver-class-name: com.mysql.cj.jdbc.Driver     
+#配置端口
+server:
+    port: 8010
+
+    #spring:
+    #  datasource:
+    #    name: test  #数据库名
+    #    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF8&serverTimezone=GMT
+    #    username: root  #用户名
+    #    password: 20000209  #密码
+    #    platform: mysql
+    #    driver-class-name: com.mysql.cj.jdbc.Driver  #数据库链接驱动
+    #mybatis:
+    #  mapper-locations: classpath:mapper/*.xml  #配置映射文件
+    #  type-aliases-package: com.example.web1.bean #配置实体类
+
+
+
+

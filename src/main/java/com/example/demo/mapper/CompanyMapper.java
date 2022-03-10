@@ -1,0 +1,19 @@
+package com.example.demo.mapper;
+
+import com.example.demo.enity.Company;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+@Mapper
+public interface CompanyMapper {
+    //插入company
+    @Insert("INSERT INTO `company` (number,name,address,phone,email) VALUES ( #{number}, #{name}, #{address},#{phone},#{email}) ")
+    Integer insertCompany(@Param("number") String number,@Param("name") String name,@Param("address") String address,@Param("phone") String phone,@Param("email") String email);
+
+    //查cmmpany 通过number(唯一一条记录)
+    @Select("SELECT * FROM `company` where `company`.number=#{number} and `company`.active=0")
+    Company getCompanyByNumber(String number);
+} 
