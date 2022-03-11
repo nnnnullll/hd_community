@@ -45,7 +45,7 @@ public class CaseService {
         caseMapper.insertCase(newcase);
         return newcase.getNumber();
     } 
-    // 查case 通过case number
+    // 查casedetail 通过case number
     public CaseDetail getCaseByNumber(Integer number){
         Case casetemp = new Case();
         casetemp = caseMapper.getCaseByNumber(number);
@@ -89,5 +89,9 @@ public class CaseService {
         caseDetail.setUpdated_by(casetemp.getUpdated_by());//updated_by
         caseDetail.setUpdated_role(casetemp.getUpdated_role());//updated_role
         return caseDetail;
+    }
+    //查caselist（状态不是关闭的） 通过household number
+    public Case[] getCaseByHouseholdNumber(Integer householdnumber){
+        return caseMapper.getCaseByHouseholdNumber(householdnumber);
     }
 }

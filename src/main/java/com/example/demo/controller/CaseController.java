@@ -30,4 +30,10 @@ public class CaseController {
         return caseService.getCaseByNumber(number);
     }
 
+    // 查caselist（状态不是关闭的） 通过household number
+    @PostMapping("/getcasebyhouseholdnumber")
+    public Case[] getCaseByHouseholdNumber(
+        @RequestParam(value = "householdnumber") Integer householdnumber) {
+        return caseService.getCaseByHouseholdNumber(householdnumber);
+    }
 }

@@ -15,4 +15,7 @@ public interface CaseMapper {
     // 查case 通过case number
     @Select("SELECT * FROM `case` where `case`.number=#{number}")
     Case getCaseByNumber(Integer number);
+    //查caselist(状态不是关闭的) 通过household number
+    @Select("SELECT * FROM `case` where `case`.household=#{householdnumber} order by number asc;")
+    Case[] getCaseByHouseholdNumber(Integer householdnumber);
 }
