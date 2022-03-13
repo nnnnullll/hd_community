@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.enity.Community;
+import com.example.demo.enity.CommunityDetail;
 import com.example.demo.service.CommunityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,13 @@ public class CommunityController {
         @RequestParam(value = "number") Integer number,
         @RequestParam(value = "company") String company){
         return communityService.getCommunity(type ,number, company);
+    }
+
+    //查community 通过community number(唯一一条记录) 
+    @PostMapping("/getcommunitydetail")
+    public CommunityDetail getCommunitySetail(
+        @RequestParam(value = "number") Integer number){
+        return communityService.getCommunityDetail(number);
     }
 
 }

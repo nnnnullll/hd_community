@@ -15,5 +15,9 @@ public interface BuildingMapper {
 
     //查building 通过community number 按照building_number排序
     @Select("SELECT * FROM `building` where `building`.community=#{community} ORDER BY `building`.building_number ASC")
-    Building[] getBuilding_ByCommunity_OrderBuilding_number(Integer case_number);
+    Building[] getBuilding_ByCommunity_OrderBuilding_number(Integer community);
+
+    //查building 通过community number 查社区楼数
+    @Select("SELECT count(*) FROM `building` where `building`.community=#{community}")
+    Integer getBuildingAmount_ByCommunity(Integer community);
 }

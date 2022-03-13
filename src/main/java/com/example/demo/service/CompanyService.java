@@ -9,6 +9,8 @@ import com.example.demo.mapper.PartnerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ch.qos.logback.core.joran.conditional.ElseAction;
+
 @Service
 public class CompanyService {
     @Autowired
@@ -33,9 +35,15 @@ public class CompanyService {
     //type=3 partner
     public Integer login(Integer username, String password,Integer type){
         if (type==1){
-            return employeeMapper.validateEmployeeByPassword(username, password);
+            if(employeeMapper.validateEmployeeByPassword(username, password)==1)
+                return 1;
+            else
+                return 0;   
         }else if(type==2){
-            return householdMapper.validateHouseholdByPassword(username, password);
+            if(householdMapper.validateHouseholdByPassword(username, password)==1)
+                return 1;
+            else
+                return 0;
         }else if(type ==3){
             return partnerMapper.validatePartnerByPassword(username, password);
         }else{
