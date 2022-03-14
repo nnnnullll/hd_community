@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 import com.example.demo.enity.Employee;
+import com.example.demo.enity.employedashboard;
 import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,10 +27,17 @@ public class EmployeeController {
     //type=1 查employee 通过number(唯一一条记录)
     //type=2 查employee 通过company number(多条记录)
     @PostMapping("/getemployee")
-    public Employee[] getCommunity(
+    public Employee[] getemployee(
         @RequestParam(value = "type") Integer type,
         @RequestParam(value = "number") Integer number,
         @RequestParam(value = "company") String company){
         return employeeService.getEmployee(type, number, company);
+    }
+
+    //type=1 查employeedashboard
+    @PostMapping("/getemployeedash")
+    public employedashboard getEmployeeDash(
+        @RequestParam(value = "number") Integer number){
+        return employeeService.getEmployeeDash(number);
     }
 } 

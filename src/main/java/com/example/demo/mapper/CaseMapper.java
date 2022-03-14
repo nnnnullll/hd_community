@@ -18,4 +18,26 @@ public interface CaseMapper {
     //查caselist(状态不是关闭的) 通过household number
     @Select("SELECT * FROM `case` where `case`.household=#{householdnumber} order by number asc;")
     Case[] getCaseByHouseholdNumber(Integer householdnumber);
+
+    //查new case amount 通过 Assignedto
+    @Select("SELECT count(*) FROM `case` where `case`.state=0;")
+    Integer getNewCaseAmountByAssignedTo(Integer number);
+    //查In progress case amount 通过 Assignedto
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state=1;")
+    Integer getInProgressCaseAmountByAssignedTo(Integer number);
+    //查AwaitingInfo case amount 通过 Assignedto
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state=2;")
+    Integer getAwaitingInfoCaseAmountByAssignedTo(Integer number);
+    //查InFix case amount 通过 Assignedto
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state=3;")
+    Integer getInFixCaseAmountByAssignedTo(Integer number);
+    //查Resolved case amount 通过 Assignedto
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state=4;")
+    Integer getResoledCaseAmountByAssignedTo(Integer number);
+    //查Escalation case amount 通过 Assignedto
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.escalation=0;")
+    Integer getEscalationCaseAmountByAssignedTo(Integer number);
+    //查Emergency case amount 通过 Assignedto
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.emergency=0;")
+    Integer getEmergencyCaseAmountByAssignedTo(Integer number);
 }
