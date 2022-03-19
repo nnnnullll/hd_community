@@ -1,9 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.enity.Company;
-import com.example.demo.mapper.CompanyMapper;
-import com.example.demo.mapper.EmployeeMapper;
-import com.example.demo.mapper.HouseholdMapper;
+import com.example.demo.enity.Relationship;
+import com.example.demo.mapper.*;
 import com.example.demo.mapper.PartnerMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,8 @@ public class CompanyService {
     HouseholdMapper householdMapper;
     @Autowired
     PartnerMapper partnerMapper;
+    @Autowired
+    RelationshipMapper relationshipMapper;
     //插company
     public Integer insertCompany(String number,String name,String address,String phone, String email){
         return companyMapper.insertCompany(number, name, address, phone, email);
@@ -28,6 +29,23 @@ public class CompanyService {
     //查company by number
     public Company getCompanyByNumbeInteger(String number){
         return companyMapper.getCompanyByNumber(number); 
+    }
+    //查company by number
+    public Company[] getCompanies(Integer partner,Integer type){
+        if( type == 1 ){
+            Integer amount = relationshipMapper.getCompanyAmountFromRelationshipByPartner(partner);
+            String[] companiesnumber =new String[amount];
+            companiesnumber = relationshipMapper.getCompanyNumberFromRelationshipByPartner(partner);
+            Company[] companies = new Company[amount];
+            for(Integer i=0;i<amount;i++){
+                companies[i]=companyMapper.getCompanyByNumber(companiesnumber[i]);
+            }
+            return companies;
+        }else{
+            Company[] companies = new Company[0];
+            return companies;
+        }
+        
     }
 
     //type=1 employee

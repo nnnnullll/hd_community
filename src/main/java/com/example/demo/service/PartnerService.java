@@ -20,8 +20,22 @@ public class PartnerService {
     public partner getPartnerByNum(Integer num){
         return partnerMapper.getPartnerByNum(num);
     }
-
-     //type=1 查employeedash
+    public partner[] getPartners(String company, Integer type){
+        if( type == 1 ){
+            Integer amount = relationshipMapper.getPartnerAmountFromRelationshipByPartner(company);
+            Integer[] partnersnumber =new Integer[amount];
+            partnersnumber = relationshipMapper.getPartnerNumberFromRelationshipByPartner(company);
+            partner[] partners = new partner[amount];
+            for(Integer i=0;i<amount;i++){
+                partners[i]=partnerMapper.getPartnerByNum(partnersnumber[i]);
+            }
+            return partners;
+        }else{
+            partner[] partners = new partner[0];
+            return partners;
+        }
+    }
+     //查Logindash
      public LoginDashboard getPartnerDash(Integer number){
         LoginDashboard partnerDashboard =new LoginDashboard();
         partner partner= new partner();

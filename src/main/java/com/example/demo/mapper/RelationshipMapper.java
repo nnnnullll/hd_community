@@ -21,7 +21,23 @@ public interface RelationshipMapper {
     @Select("SELECT * FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=0")
     Relationship[] getRelationshipByCompany(@Param("company") String company);
 
-    //查relationship 通过company & type
+    //查relationships 通过company & type
     @Select("SELECT * FROM `relationship` where `relationship`.company=#{company} and `relationship`.type=#{type} and `relationship`.active=0")
     Relationship[] getRelationshipByCompanyType(@Param("company") String company,@Param("type") Integer type);
+
+    //查CompanyAmount 通过partner
+    @Select("SELECT count(distinct company) FROM `relationship` where `relationship`.partner=#{partner} and `relationship`.active=0")
+    Integer getCompanyAmountFromRelationshipByPartner(@Param("partner") Integer partner);
+
+    //查CompanyNumber 通过partner
+    @Select("SELECT distinct company FROM `relationship` where `relationship`.partner=#{partner} and `relationship`.active=0")
+    String[] getCompanyNumberFromRelationshipByPartner(@Param("partner") Integer partner);
+
+    //查PartnerAmount 通过company
+    @Select("SELECT count(distinct partner) FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=0")
+    Integer getPartnerAmountFromRelationshipByPartner(@Param("company") String company);
+
+    //查PartnerNumber 通过company
+    @Select("SELECT distinct partner FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=0")
+    Integer[] getPartnerNumberFromRelationshipByPartner(@Param("company") String company);
 }

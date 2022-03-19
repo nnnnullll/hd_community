@@ -30,6 +30,14 @@ public class CompanyController {
         return companyService.getCompanyByNumbeInteger(number);
     }
 
+    //type==1 partner通过relationship查维修公司合作的物业公司们
+    @PostMapping("/getcompanies")
+    public Company[] getCompanies(
+        @RequestParam(value = "partner") Integer partner,
+        @RequestParam(value = "type") Integer type){
+        return companyService.getCompanies(partner, type);
+    }
+
     //type=1 company
     //type=2 household
     //type=3 partner
