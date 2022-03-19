@@ -27,7 +27,7 @@ public class CompanyService {
     }
     //查company by number
     public Company getCompanyByNumbeInteger(String number){
-        return companyMapper.getCompanyByNumber(number);
+        return companyMapper.getCompanyByNumber(number); 
     }
 
     //type=1 employee

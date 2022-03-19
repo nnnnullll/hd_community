@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 import com.example.demo.enity.Employee;
-import com.example.demo.enity.employedashboard;
-import com.example.demo.service.EmployeeService;
+import com.example.demo.enity.LoginDashboard;
+import com.example.demo.service.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
+    @Autowired
+    HouseholdService householdService;
+    @Autowired
+    PartnerService partnerService;
     //插employee
     @PostMapping("/insertemployee")
     public Integer insertemployee(
@@ -35,9 +40,19 @@ public class EmployeeController {
     }
 
     //type=1 查employeedashboard
-    @PostMapping("/getemployeedash")
-    public employedashboard getEmployeeDash(
-        @RequestParam(value = "number") Integer number){
-        return employeeService.getEmployeeDash(number);
+    //type=2 查householddashboard
+    @PostMapping("/getlogindash")
+    public LoginDashboard getEmployeeDash(
+        @RequestParam(value = "number") Integer number,
+        @RequestParam(value = "type") Integer type){
+            if(type== 1){
+                return employeeService.getEmployeeDash(number);
+            }
+            else if(type== 2){
+                return householdService.getHouseholdDash(number);
+            }else{
+                return partnerService.getPartnerDash(number);
+            }
+        
     }
 } 

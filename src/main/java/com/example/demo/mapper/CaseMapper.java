@@ -19,9 +19,12 @@ public interface CaseMapper {
     @Select("SELECT * FROM `case` where `case`.household=#{householdnumber} order by number asc;")
     Case[] getCaseByHouseholdNumber(Integer householdnumber);
 
-    //查new case amount 通过 Assignedto
-    @Select("SELECT count(*) FROM `case` where `case`.state=0;")
-    Integer getNewCaseAmountByAssignedTo(Integer number);
+//Employee Dash  
+// Integer newnumber;
+// Integer inprogressnumber;
+// Integer escalationnumber;
+// Integer emergencynumber;
+// Integer resolvednumber;  
     //查In progress case amount 通过 Assignedto
     @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state=1;")
     Integer getInProgressCaseAmountByAssignedTo(Integer number);
@@ -35,9 +38,152 @@ public interface CaseMapper {
     @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state=4;")
     Integer getResoledCaseAmountByAssignedTo(Integer number);
     //查Escalation case amount 通过 Assignedto
-    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.escalation=0;")
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.escalation=1;")
     Integer getEscalationCaseAmountByAssignedTo(Integer number);
     //查Emergency case amount 通过 Assignedto
-    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.emergency=0;")
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.emergency=1;")
     Integer getEmergencyCaseAmountByAssignedTo(Integer number);
+
+
+    //查new case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where  `case`.company=#{number} and `case`.state=0;")
+    Integer getNewCaseAmountByCompanyNumber(String number);
+    //查In progress case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.state=1;")
+    Integer getInProgressCaseAmountByCompanyNumber(String number);
+    //查AwaitingInfo case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.state=2;")
+    Integer getAwaitingInfoCaseAmountByCompanyNumber(String number);
+    //查InFix case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.state=3;")
+    Integer getInFixCaseAmountByCompanyNumber(String number);
+    //查Resolved case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.state=4;")
+    Integer getResoledCaseAmountByCompanyNumber(String number);
+    //查Escalation case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.escalation=1;")
+    Integer getEscalationCaseAmountByCompanyNumber(String number);
+    //查Emergency case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.emergency=1;")
+    Integer getEmergencyCaseAmountByCompanyNumber(String number);
+
+    //查type1 case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where  `case`.company=#{number} and `case`.type=1;")
+    Integer getT1CaseAmountByCompanyNumber(String number);
+    //查type2 case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.type=2;")
+    Integer getT2CaseAmountByCompanyNumber(String number);
+    //查type3 case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.type=3;")
+    Integer getT3CaseAmountByCompanyNumber(String number);
+    //查type4 case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.type=4;")
+    Integer getT4CaseAmountByCompanyNumber(String number);
+    //查type5 case amount 通过 CompanyNumber
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.type=5;")
+    Integer getT5CaseAmountByCompanyNumber(String number);
+
+//Household Dash
+// Integer newnumber;
+// Integer inprogressnumber;
+// Integer escalationnumber;
+// Integer emergencynumber;
+// Integer resolvednumber;
+    //查New case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state=0;")
+    Integer getNewCaseAmountByHousehold(Integer number);
+    //查In progress case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state=1;")
+    Integer getInProgressCaseAmountByHousehold(Integer number);
+    //查AwaitingInfo case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state=2;")
+    Integer getAwaitingInfoCaseAmountByHousehold(Integer number);
+    //查InFix case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state=3;")
+    Integer getInFixCaseAmountByHousehold(Integer number);
+    //查Resolved case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state=4;")
+    Integer getResoledCaseAmountByHousehold(Integer number);
+    //查Escalation case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.escalation=1;")
+    Integer getEscalationCaseAmountByHousehold(Integer number);
+    //查Emergency case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.emergency=1;")
+    Integer getEmergencyCaseAmountByHousehold(Integer number);
+
+
+    //查new case amount 通过 Community
+    @Select("SELECT count(*) FROM `case` where  `case`.community=#{number} and `case`.state=0;")
+    Integer getNewCaseAmountByCommunity(Integer number);
+    //查In progress case amount 通过 Community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.state=1;")
+    Integer getInProgressCaseAmountByCommunity(Integer number);
+    //查AwaitingInfo case amount 通过 Community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.state=2;")
+    Integer getAwaitingInfoCaseAmountByCommunity(Integer number);
+    //查InFix case amount 通过 Community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.state=3;")
+    Integer getInFixCaseAmountByCommunity(Integer number);
+    //查Resolved case amount 通过 Community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.state=4;")
+    Integer getResoledCaseAmountByCommunity(Integer number);
+    //查Escalation case amount 通过 community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.escalation=1;")
+    Integer getEscalationCaseAmountByCommunity(Integer number);
+    //查Emergency case amount 通过 community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.emergency=1;")
+    Integer getEmergencyCaseAmountByCommunity(Integer number);
+
+    //查type1 case amount 通过 community
+    @Select("SELECT count(*) FROM `case` where  `case`.community=#{number} and `case`.type=1;")
+    Integer getT1CaseAmountByCommunity(Integer number);
+    //查type2 case amount 通过 community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.type=2;")
+    Integer getT2CaseAmountByCommunity(Integer number);
+    //查type3 case amount 通过 community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.type=3;")
+    Integer getT3CaseAmountByCommunity(Integer number);
+    //查type4 case amount 通过 community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.type=4;")
+    Integer getT4CaseAmountByCommunity(Integer number);
+    //查type5 case amount 通过 community
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{number} and `case`.type=5;")
+    Integer getT5CaseAmountByCommunity(Integer number);
+//partner
+// Integer fixwaite_number;
+// Integer fixassigned_number;
+// Integer infix_number;
+// Integer fixfinish_number;
+// Integer fixclose_number;
+//查New case amount 通过 partner
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=3 and `case`.fix_state=1;")
+    Integer getFixwaite_numberCaseAmountByPartner(Integer number);
+    //查In progress case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=3 and `case`.fix_state=2;")
+    Integer getFixassigned_numberCaseAmountByPartner(Integer number);
+    //查AwaitingInfo case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=3 and `case`.fix_state=3;")
+    Integer getInfix_numberCaseAmountByPartner(Integer number);
+    //查InFix case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=3 and `case`.fix_state=4;")
+    Integer getFixfinish_numberCaseAmountByPartner(Integer number);
+    //查Resolved case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=5;")
+    Integer getFixclose_numberCaseAmountByPartner(Integer number);
+
+     //查type1 case amount 通过 partner
+     @Select("SELECT count(*) FROM `case` where  `case`.fix_assigned_to=#{number} and `case`.type=1;")
+     Integer getT1CaseAmountByPartner(Integer number);
+     //查type2 case amount 通过 partner
+     @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.type=2;")
+     Integer getT2CaseAmountByPartner(Integer number);
+     //查type3 case amount 通过 partner
+     @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.type=3;")
+     Integer getT3CaseAmountByPartner(Integer number);
+     //查type4 case amount 通过 partner
+     @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.type=4;")
+     Integer getT4CaseAmountByPartner(Integer number);
+     //查type5 case amount 通过 partner
+     @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.type=5;")
+     Integer getT5CaseAmountByPartner(Integer number);
 }

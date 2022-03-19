@@ -15,5 +15,5 @@ public interface CompanyMapper {
 
     //查cmmpany 通过number(唯一一条记录)
     @Select("SELECT * FROM `company` where `company`.number=#{number} and `company`.active=0")
-    Company getCompanyByNumber(String number);
+    Company getCompanyByNumber(String integer);
 } 

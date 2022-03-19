@@ -13,6 +13,10 @@ public interface RelationshipMapper {
     @Insert("INSERT INTO `relationship`(company,partner,type) VALUES(#{company},#{partner},#{type})")
     Integer InsertRelationship(@Param("company") String company,@Param("partner") Integer partner,@Param("type") Integer type);
 
+    //查relationship 通过partner
+    @Select("SELECT distinct type  FROM `relationship` where `relationship`.partner=#{partner} and `relationship`.active=0")
+    Integer[] getRelationshipTypeByPartner(@Param("partner") Integer partner);
+
     //查relationship 通过company
     @Select("SELECT * FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=0")
     Relationship[] getRelationshipByCompany(@Param("company") String company);
