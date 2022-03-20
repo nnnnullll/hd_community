@@ -37,6 +37,10 @@ public class HouseholdService {
         } 
     }
 
+    public Household[] getHouseholdByCompany(String company){
+        return householdMapper.getHouseholdByCompany(company);
+    }
+
     //type=1 查employeedash
     public LoginDashboard getHouseholdDash(Integer number){
         LoginDashboard householdDashboard =new LoginDashboard();

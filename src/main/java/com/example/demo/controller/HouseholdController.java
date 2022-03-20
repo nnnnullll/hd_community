@@ -31,4 +31,10 @@ public class HouseholdController {
         @RequestParam(value = "community") Integer community){
         return householdService.getHousehold(type, number, community);
     }
+
+    @PostMapping("/gethouseholdbycompany")
+    public Household[] getHouseholdByCompany(
+        @RequestParam(value = "company") String company){
+        return householdService.getHouseholdByCompany(company);
+    }
 }
