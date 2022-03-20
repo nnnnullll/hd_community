@@ -24,18 +24,14 @@ public class CompanyController {
         return companyService.insertCompany(number, name, address, phone, email);
     }
 
-    @PostMapping("/getcompanybynumber")
-    public Company getCompany(
-        @RequestParam(value = "number") String number){
-        return companyService.getCompanyByNumbeInteger(number);
-    }
-
-    //type==1 partner通过relationship查维修公司合作的物业公司们
+    //type==1 通过number找company
+    //type==2 partner通过relationship查维修公司合作的物业公司们
     @PostMapping("/getcompanies")
     public Company[] getCompanies(
         @RequestParam(value = "partner") Integer partner,
-        @RequestParam(value = "type") Integer type){
-        return companyService.getCompanies(partner, type);
+        @RequestParam(value = "type") Integer type,
+        @RequestParam(value = "number") String number){
+        return companyService.getCompanies(partner, type, number);
     }
 
     //type=1 company

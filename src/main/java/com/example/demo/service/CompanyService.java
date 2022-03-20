@@ -26,13 +26,14 @@ public class CompanyService {
     public Integer insertCompany(String number,String name,String address,String phone, String email){
         return companyMapper.insertCompany(number, name, address, phone, email);
     }
-    //查company by number
-    public Company getCompanyByNumbeInteger(String number){
-        return companyMapper.getCompanyByNumber(number); 
-    }
-    //查company by number
-    public Company[] getCompanies(Integer partner,Integer type){
+   
+    //查company by partner
+    public Company[] getCompanies(Integer partner,Integer type , String number){
         if( type == 1 ){
+            Company[] companies = new Company[1];
+            companies[0] = companyMapper.getCompanyByNumber(number); 
+            return companies;
+        }else if(type == 2 ){
             Integer amount = relationshipMapper.getCompanyAmountFromRelationshipByPartner(partner);
             String[] companiesnumber =new String[amount];
             companiesnumber = relationshipMapper.getCompanyNumberFromRelationshipByPartner(partner);

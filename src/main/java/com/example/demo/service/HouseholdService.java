@@ -24,7 +24,7 @@ public class HouseholdService {
 
     //查household 通过number(唯一一条记录)
     //查household 通过community number(多条记录)
-    public Household[] getHousehold(Integer type,Integer number,Integer community){
+    public Household[] getHousehold(Integer type,Integer number,Integer community,String company){
         switch(type){
             case 1: 
             Household[] household = new Household[1]; 
@@ -32,13 +32,11 @@ public class HouseholdService {
             return household;
             case 2:
             return householdMapper.getHouseholdByCommunity(community);
+            case 3:
+            return householdMapper.getHouseholdByCompany(company);
             default:
             return null;
         } 
-    }
-
-    public Household[] getHouseholdByCompany(String company){
-        return householdMapper.getHouseholdByCompany(company);
     }
 
     //type=1 查employeedash

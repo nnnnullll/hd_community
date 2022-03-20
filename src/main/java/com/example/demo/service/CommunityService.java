@@ -1,5 +1,4 @@
 package com.example.demo.service;
-import com.example.demo.enity.Building;
 import com.example.demo.enity.Community;
 import com.example.demo.enity.CommunityDetail;
 import com.example.demo.mapper.*;
@@ -37,7 +36,6 @@ public class CommunityService {
 
     //查community 通过community number(唯一一条记录)
     public CommunityDetail getCommunityDetail(Integer number){
-        
         CommunityDetail communityDetail=new CommunityDetail();
         Community community = new Community();
         community = communityMapper.getCommunityByNumber(number);
