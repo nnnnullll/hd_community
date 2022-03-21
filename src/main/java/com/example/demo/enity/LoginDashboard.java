@@ -7,7 +7,7 @@ public class LoginDashboard {
     Integer communitynumber;
     Integer partnernumber;
     String Line2;
-    String ifadmin;
+    Integer ifadmin;
 
     //employee household
     Integer newnumber;
@@ -32,6 +32,18 @@ public class LoginDashboard {
     String[] typeChartLabels;
 
     
+    public Integer getPartnernumber() {
+        return partnernumber;
+    }
+    public void setPartnernumber(Integer partnernumber) {
+        this.partnernumber = partnernumber;
+    }
+    public Integer getIfadmin() {
+        return ifadmin;
+    }
+    public void setIfadmin(Integer ifadmin) {
+        this.ifadmin = ifadmin;
+    }
     public Integer getFixwaite_number() {
         return fixwaite_number;
     }
@@ -121,12 +133,6 @@ public class LoginDashboard {
     }
     public void setTypechart(Integer[] typechart) {
         this.typechart = typechart;
-    }
-    public String getIfadmin() {
-        return ifadmin;
-    }
-    public void setIfadmin(String ifadmin) {
-        this.ifadmin = ifadmin;
     }
     public Integer getResolvednumber() {
         return resolvednumber;
