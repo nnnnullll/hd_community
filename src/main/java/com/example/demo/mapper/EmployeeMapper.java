@@ -24,5 +24,9 @@ public interface EmployeeMapper {
     //login 核实employee 通过number & password
     @Select("SELECT count(*) FROM `employee` where `employee`.number=#{username} and `employee`.password=#{password} and `employee`.active=0")
     Integer validateEmployeeByPassword(Integer username, String password);
+
+    //login 核实employee 通过number & password
+    @Select("SELECT admin FROM `employee` where `employee`.number=#{username} and `employee`.active=0")
+    Integer getEmployeeActiveByNumber(Integer username);
 }
  

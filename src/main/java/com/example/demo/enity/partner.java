@@ -3,22 +3,23 @@ package com.example.demo.enity;
 
 public class partner {
     Integer num;
-    String number;
     String name;
     String address;
     String phone;
     String email;
+    String password;
+    
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
     public Integer getNum() {
         return num;
     }
     public void setNum(Integer num) {
         this.num = num;
-    }
-    public String getNumber() {
-        return number;
-    }
-    public void setNumber(String number) {
-        this.number = number;
     }
     public String getName() {
         return name;

@@ -13,13 +13,11 @@ public class PartnerController {
     PartnerService partnerService;
     @PostMapping("/insertpartner")
     public Integer insertPartner(
-    @RequestParam(value = "number") String number,
     @RequestParam(value = "name") String name,
     @RequestParam(value = "address") String address,
     @RequestParam(value = "phone") String phone,
-    @RequestParam(value = "email") String email,
-    @RequestParam(value = "password") String password){
-        return partnerService.insertPartner(number, name, address, phone, email, password);
+    @RequestParam(value = "email") String email){
+        return partnerService.insertPartner(name, address, phone, email);
     } 
 
     @PostMapping("/getpartnerbynum")

@@ -49,24 +49,27 @@ public class CompanyService {
         
     }
 
-    //type=1 employee
-    //type=2 household
-    //type=3 partner
+    // type=1 employee  type=2 household  type=3 partner
+    // type=1  return 0-no admin 1-admin 2-失败
+    // type=2/3 return 1-成功 2-失败
     public Integer login(Integer username, String password,Integer type){
         if (type==1){
             if(employeeMapper.validateEmployeeByPassword(username, password)==1)
-                return 1;
+                return employeeMapper.getEmployeeActiveByNumber(username);
             else
-                return 0;   
+                return 2;   
         }else if(type==2){
             if(householdMapper.validateHouseholdByPassword(username, password)==1)
                 return 1;
             else
-                return 0;
+                return 2;
         }else if(type ==3){
-            return partnerMapper.validatePartnerByPassword(username, password);
+            if(partnerMapper.validatePartnerByPassword(username, password) == 1)
+                return 1;
+            else
+                return 2;
         }else{
-            return 0;
+            return 2;
         }  
     }
 } 

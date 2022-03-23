@@ -42,8 +42,8 @@ public class EmployeeService {
         String companyName = companyMapper.getCompanyByNumber(companyNumber).getName();
         employedashboard.setLoginname(employee.getName());
         employedashboard.setLine1("所属物业公司：             "+ companyName);
-        employedashboard.setLine2("是否为超级管理员:             " + (employee.getActive()==0?"否":"是"));
-        employedashboard.setIfadmin(employee.getActive());
+        employedashboard.setLine2("是否为超级管理员:             " + (employee.getAdmin()==0?"否":"是"));
+        employedashboard.setIfadmin(employee.getAdmin());
         
         employedashboard.setNewnumber(caseMapper.getNewCaseAmountByCompanyNumber(companyNumber));
         Integer inprogressnumber = caseMapper.getInProgressCaseAmountByAssignedTo(number) + caseMapper.getInFixCaseAmountByAssignedTo(number);

@@ -34,9 +34,9 @@ public class CompanyController {
         return companyService.getCompanies(partner, type, number);
     }
 
-    //type=1 company
-    //type=2 household
-    //type=3 partner
+    // type=1 employee  type=2 household  type=3 partner
+    // type=1  return 0-no admin 1-admin 2-失败
+    // type=2/3 return 1-成功 2-失败
     @PostMapping("/login")
     public Integer login(
         @RequestParam(value = "username") Integer username,

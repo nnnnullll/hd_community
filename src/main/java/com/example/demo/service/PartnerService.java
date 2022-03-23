@@ -13,8 +13,19 @@ public class PartnerService {
     CaseMapper caseMapper;
     @Autowired
     RelationshipMapper relationshipMapper;
-    public Integer insertPartner(String number, String name, String address, String phone, String email,String password){
-        return partnerMapper.InsertPartner(number, name, address, phone, email, password);
+    public Integer insertPartner( String name, String address, String phone, String email){
+        if(partnerMapper.getPartnerAmountByPhone(phone)>1 || partnerMapper.getPartnerAmountByName(name)>1){
+            return 0;
+        }else{
+            partner partner = new partner();
+            partner.setName(name);
+            partner.setEmail(email);
+            partner.setPhone(phone);
+            partner.setAddress(address);
+            partner.setPassword(phone);
+            partnerMapper.InsertPartner(partner);
+            return partner.getNum();
+        }
     }
 
     public partner getPartnerByNum(Integer num){
