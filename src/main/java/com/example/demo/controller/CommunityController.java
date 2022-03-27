@@ -18,10 +18,12 @@ public class CommunityController {
     //插community
     @PostMapping("/insertcommunity")
     public Integer insertCommunity(
+        @RequestParam(value = "buildings") String buildings,
+        @RequestParam(value = "rooms") String rooms,
         @RequestParam(value = "name") String name,
         @RequestParam(value = "region") String region,
         @RequestParam(value = "company") String company){
-        return communityService.insertCommunity(name, region, company);
+        return communityService.insertCommunity(name, region, company,buildings,rooms);
     }
 
     //type=1 查community 通过community number(唯一一条记录)

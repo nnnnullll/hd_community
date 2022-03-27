@@ -13,8 +13,20 @@ public class EmployeeService {
     CaseMapper caseMapper;
     @Autowired
     CompanyMapper companyMapper;
-    public Integer insertEmployee(String name,String company,String id,String phone,String email,String password){
-        return employeeMapper.InsertEmployee(name, company, id, phone, email, password);
+    public Integer insertEmployee(String name,String company,String id,String phone,String email,Integer admin){
+        if(employeeMapper.validateEmployeeByID(id)>=1 || employeeMapper.validateEmployeeByPhone(phone)>=1){
+            return 0;
+        }else{
+            Employee employee = new Employee();
+            employee.setAdmin(admin);
+            employee.setCompany(company);
+            employee.setEmail(email);
+            employee.setId(id);
+            employee.setPhone(phone);
+            employee.setName(name);
+            employeeMapper.InsertEmployee(employee);
+            return employee.getNumber();
+        }
     }
 
     //type=1 查employee 通过number(唯一一条记录)

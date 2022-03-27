@@ -29,6 +29,9 @@ public interface HouseholdMapper {
     //查household 通过community number(多条记录)
     @Select("SELECT count(*) FROM `household` where `household`.community=#{community}")
     Integer getHouseholdAmountByCommunity(Integer community);
+    //查household 通过community number(多条记录)
+    @Select("SELECT count(distinct building) FROM `household` where `household`.community=#{community}")
+    Integer getBuildingAmountByCommunity(Integer community);
 
     //login核实household 通过number & password
     @Select("SELECT count(*) FROM `household` where `household`.number=#{username} and `household`.password=#{password}")

@@ -14,7 +14,7 @@ public class PartnerService {
     @Autowired
     RelationshipMapper relationshipMapper;
     public Integer insertPartner( String name, String address, String phone, String email){
-        if(partnerMapper.getPartnerAmountByPhone(phone)>1 || partnerMapper.getPartnerAmountByName(name)>1){
+        if(partnerMapper.getPartnerAmountByPhone(phone)>=1 || partnerMapper.getPartnerAmountByName(name)>=1){
             return 0;
         }else{
             partner partner = new partner();

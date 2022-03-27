@@ -4,14 +4,16 @@ import com.example.demo.enity.Community;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface CommunityMapper {
     //插入community
-    @Insert("INSERT INTO `community` (name,region,company) VALUES (#{name},#{region},#{company}) ")
-    Integer insertCommunity(@Param("name") String name,@Param("region") String region,@Param("company") String company);
+    @Insert("INSERT INTO `community` (name,region,company) VALUES (#{community.name},#{community.region},#{community.company}) ")
+    @Options(useGeneratedKeys=true, keyProperty="community.number")
+    Integer insertCommunity(@Param("community") Community community);
 
     //查community 通过community number(唯一一条记录)
     @Select("SELECT * FROM `community` where `community`.number=#{number} and `community`.active=0")

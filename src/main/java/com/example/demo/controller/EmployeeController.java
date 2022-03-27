@@ -25,8 +25,8 @@ public class EmployeeController {
         @RequestParam(value = "id") String id,
         @RequestParam(value = "phone") String phone,
         @RequestParam(value = "email") String email,
-        @RequestParam(value = "password") String password){
-        return employeeService.insertEmployee(name, company, id, phone, email, password);
+        @RequestParam(value = "admin") Integer admin){
+        return employeeService.insertEmployee(name, company, id, phone, email, admin);
     }
 
     //type=1 查employee 通过number(唯一一条记录)
