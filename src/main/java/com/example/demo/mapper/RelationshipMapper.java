@@ -16,6 +16,9 @@ public interface RelationshipMapper {
     //查relationship 通过partner
     @Select("SELECT distinct type  FROM `relationship` where `relationship`.partner=#{partner} and `relationship`.active=0")
     Integer[] getRelationshipTypeByPartner(@Param("partner") Integer partner);
+    //查relationship 通过partner
+    @Select("SELECT distinct type  FROM `relationship` where `relationship`.partner=#{partner} and `relationship`.company=#{company} and `relationship`.active=0")
+    Integer[] getRelationshipTypeByPartnerAndCompany(@Param("partner") Integer partner,@Param("company") String company);
 
     //查relationship 通过company
     @Select("SELECT * FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=0")

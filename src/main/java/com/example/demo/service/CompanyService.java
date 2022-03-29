@@ -1,14 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.enity.Company;
-import com.example.demo.enity.Relationship;
 import com.example.demo.mapper.*;
 import com.example.demo.mapper.PartnerMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import ch.qos.logback.core.joran.conditional.ElseAction;
 
 @Service
 public class CompanyService {

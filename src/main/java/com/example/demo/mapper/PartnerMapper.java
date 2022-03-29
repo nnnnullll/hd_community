@@ -16,8 +16,12 @@ public interface PartnerMapper {
     Integer InsertPartner(@Param("partner") partner partner);
 
     //查partner 通过number(唯一一条记录)
-    @Select("SELECT * FROM `partner` where `partner`.num=#{num}")
+    @Select("SELECT * FROM `partner` where `partner`.num=#{num} and `partner`.active=0")
     partner getPartnerByNum(Integer num);
+
+    //查partner 所有
+    @Select("SELECT * FROM `partner` where `partner`.active=0")
+    partner[] getAllPartner();
 
     //查partner 通过number(唯一一条记录)
     @Select("SELECT count(*) FROM `partner` where `partner`.phone=#{phone}")

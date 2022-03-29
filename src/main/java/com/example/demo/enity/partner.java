@@ -8,7 +8,49 @@ public class partner {
     String phone;
     String email;
     String password;
+    String description;
+    Integer one;
+    Integer two;
+    Integer three;
+    Integer four;
+    Integer five;
     
+    public Integer getOne() {
+        return one;
+    }
+    public void setOne(Integer one) {
+        this.one = one;
+    }
+    public Integer getTwo() {
+        return two;
+    }
+    public void setTwo(Integer two) {
+        this.two = two;
+    }
+    public Integer getThree() {
+        return three;
+    }
+    public void setThree(Integer three) {
+        this.three = three;
+    }
+    public Integer getFour() {
+        return four;
+    }
+    public void setFour(Integer four) {
+        this.four = four;
+    }
+    public Integer getFive() {
+        return five;
+    }
+    public void setFive(Integer five) {
+        this.five = five;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public String getPassword() {
         return password;
     }

@@ -31,6 +31,8 @@ public class PartnerService {
     public partner getPartnerByNum(Integer num){
         return partnerMapper.getPartnerByNum(num);
     }
+    //type=1 查company的合作维修公司
+    //type=2 所有active的维修公司
     public partner[] getPartners(String company, Integer type){
         if( type == 1 ){
             Integer amount = relationshipMapper.getPartnerAmountFromRelationshipByPartner(company);
@@ -39,8 +41,29 @@ public class PartnerService {
             partner[] partners = new partner[amount];
             for(Integer i=0;i<amount;i++){
                 partners[i]=partnerMapper.getPartnerByNum(partnersnumber[i]);
+                Integer[] relationshiptype = new Integer[5];
+                relationshiptype = relationshipMapper.getRelationshipTypeByPartnerAndCompany(partnersnumber[i],company);
+                String typeStr = "";
+                for(int j=0;j<relationshiptype.length;j++){
+                    String t= "";
+                    if(relationshiptype[j]==0){
+                        t="水管 ";
+                    } else if(relationshiptype[j]==1){
+                        t="电路 ";
+                    }else if(relationshiptype[j]==2){
+                        t="绿化 ";
+                    }else if(relationshiptype[j]==3){
+                        t="公共设施 ";
+                    }else{
+                        t="其他 ";
+                    }
+                    typeStr = typeStr + t;
+                }
+                partners[i].setDescription("合作类别：" + typeStr);
             }
             return partners;
+        } else if( type == 2 ){
+            return partnerMapper.getAllPartner();
         }else{
             partner[] partners = new partner[0];
             return partners;
