@@ -9,6 +9,14 @@ public class Activity {
     Integer updated_role;
     Integer updated_by;
     String updated;
+    String updated_name;
+    
+    public String getUpdated_name() {
+        return updated_name;
+    }
+    public void setUpdated_name(String updated_name) {
+        this.updated_name = updated_name;
+    }
     public Integer getNumber() {
         return number;
     }
