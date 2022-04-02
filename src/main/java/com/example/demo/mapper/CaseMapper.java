@@ -16,8 +16,14 @@ public interface CaseMapper {
     @Select("SELECT * FROM `case` where `case`.number=#{number}")
     Case getCaseByNumber(Integer number);
     //查caselist(状态不是关闭的) 通过household number
-    @Select("SELECT * FROM `case` where `case`.household=#{householdnumber} order by number asc;")
-    Case[] getCaseByHouseholdNumber(Integer householdnumber);
+    @Select("SELECT * FROM `case` where `case`.household=#{number} order by number asc;")
+    Case[] getCaseByHouseholdNumber(Integer number);
+    //查caselist(状态不是关闭的) 通过household number
+    @Select("SELECT * FROM `case` where `case`.assigned_to=#{number} order by number asc;")
+    Case[] getCaseByEmployeeNumber(Integer number);
+    //查caselist(状态不是关闭的) 通过household number
+    @Select("SELECT * FROM `case` where `case`.fix_assigned_to=#{number} order by number asc;")
+    Case[] getCaseByPartnerNumber(Integer number);
 
 //Employee Dash  
 // Integer newnumber;

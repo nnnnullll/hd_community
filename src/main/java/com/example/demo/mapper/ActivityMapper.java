@@ -13,6 +13,10 @@ public interface ActivityMapper {
     Integer insertActivity(Integer case_number, String message, String updated_name,Integer updated_role,Integer updated_by);
 
     //查activity 通过case number 按照时间排序
+    @Select("SELECT count(*) FROM `activity` where `activity`.case_number=#{case_number}")
+    Integer getActivityAmountByCase_number(Integer case_number);
+
+    //查activity 通过case number 按照时间排序
     @Select("SELECT * FROM `activity` where `activity`.case_number=#{case_number} ORDER BY `activity`.updated DESC")
     Activity[] getActivityByCase_number(Integer case_number);
 }

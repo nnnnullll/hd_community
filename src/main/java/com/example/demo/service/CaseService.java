@@ -19,6 +19,8 @@ public class CaseService {
     CommunityMapper communityMapper;
     @Autowired
     CompanyMapper companyMapper;
+    @Autowired
+    ActivityMapper activityMapper;
 
     //插入case
     public Integer insertCase(String subject,String description,Integer type,Integer created_role,Integer created_by){
@@ -88,10 +90,20 @@ public class CaseService {
         caseDetail.setUpdated(casetemp.getUpdated());//updated
         caseDetail.setUpdated_by(casetemp.getUpdated_by());//updated_by
         caseDetail.setUpdated_role(casetemp.getUpdated_role());//updated_role
+        Activity[] activities = new Activity[activityMapper.getActivityAmountByCase_number(number)];
+        activities = activityMapper.getActivityByCase_number(number);
+        caseDetail.setActivities(activities);
         return caseDetail;
     }
     //查caselist（状态不是关闭的） 通过household number
-    public Case[] getCaseByHouseholdNumber(Integer householdnumber){
-        return caseMapper.getCaseByHouseholdNumber(householdnumber);
+    // 1-employee 2-Customer 3-partner
+    public Case[] getCaseList(Integer number,Integer type){
+        if(type == 1){
+            return caseMapper.getCaseByEmployeeNumber(number);
+        }else if(type == 2){
+            return caseMapper.getCaseByHouseholdNumber(number);
+        }else{
+            return caseMapper.getCaseByPartnerNumber(number);
+        } 
     }
 }

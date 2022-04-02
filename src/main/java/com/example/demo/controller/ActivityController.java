@@ -23,11 +23,4 @@ public class ActivityController {
     @RequestParam(value = "updated_by") Integer updated_by){
         return activityService.insertActivity(case_number, message, updated_role, updated_by);
     }
-
-    // 查activity 通过case_number时间排序
-    @PostMapping("/getactivitybycase_number")
-    public Activity[] getnotet(
-        @RequestParam(value = "case_number") Integer case_number) {
-        return activityService.getActivityByCase_number(case_number);
-    }
 }

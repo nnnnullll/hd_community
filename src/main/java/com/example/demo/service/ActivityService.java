@@ -31,9 +31,4 @@ public class ActivityService {
         }
         return activityMapper.insertActivity(case_number, message, updated_name, updated_role, updated_by);
     }
-
-    //查activity 通过case number 按照时间排序
-    public Activity[] getActivityByCase_number(Integer case_number){
-        return activityMapper.getActivityByCase_number(case_number);
-    }
 }

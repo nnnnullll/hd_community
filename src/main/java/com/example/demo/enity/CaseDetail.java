@@ -21,6 +21,14 @@ public class CaseDetail {
     Integer updated_role;
     Integer updated_by;
     String updated;
+    Activity[] activities;
+    
+    public Activity[] getActivities() {
+        return activities;
+    }
+    public void setActivities(Activity[] activities) {
+        this.activities = activities;
+    }
     public Integer getNumber() {
         return number;
     }
