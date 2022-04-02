@@ -17,12 +17,11 @@ public class ActivityController {
     @PostMapping("/insertactivity")
     public Integer insertCompany(
     @RequestParam(value = "case_number") Integer case_number,
-    @RequestParam(value = "type") Integer type,
+   // @RequestParam(value = "type") Integer type,
     @RequestParam(value = "message") String message,
-    @RequestParam(value = "updated_name") String updated_name,
     @RequestParam(value = "updated_role") Integer updated_role,
     @RequestParam(value = "updated_by") Integer updated_by){
-        return activityService.insertActivity(case_number, type, message, updated_name, updated_role, updated_by);
+        return activityService.insertActivity(case_number, message, updated_role, updated_by);
     }
 
     // 查activity 通过case_number时间排序
