@@ -1,5 +1,4 @@
 package com.example.demo.controller;
-import com.example.demo.enity.Activity;
 import com.example.demo.service.ActivityService;
 
 import org.springframework.beans.factory.annotation.Autowired;

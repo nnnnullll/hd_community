@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface CaseMapper { 
@@ -15,6 +16,7 @@ public interface CaseMapper {
     // 查case 通过case number
     @Select("SELECT * FROM `case` where `case`.number=#{number}")
     Case getCaseByNumber(Integer number);
+//caselist    
     //查caselist(状态不是关闭的) 通过household number
     @Select("SELECT * FROM `case` where `case`.household=#{number} order by number asc;")
     Case[] getCaseByHouseholdNumber(Integer number);
@@ -24,6 +26,9 @@ public interface CaseMapper {
     //查caselist(状态不是关闭的) 通过household number
     @Select("SELECT * FROM `case` where `case`.fix_assigned_to=#{number} order by number asc;")
     Case[] getCaseByPartnerNumber(Integer number);
+//case update
+    @Update("update `case` set `case`.state=1,`case`.assigned_to=#{assigned_to} where `case`.number=#{number};")
+    Integer updateCaseFromNewToInProgree(Integer number,Integer assigned_to);
 
 //Employee Dash  
 // Integer newnumber;

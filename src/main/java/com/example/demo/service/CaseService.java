@@ -47,6 +47,7 @@ public class CaseService {
         caseMapper.insertCase(newcase);
         return newcase.getNumber();
     } 
+    
     // 查casedetail 通过case number
     public CaseDetail getCaseByNumber(Integer number){
         Case casetemp = new Case();
@@ -95,6 +96,7 @@ public class CaseService {
         caseDetail.setActivities(activities);
         return caseDetail;
     }
+    
     //查caselist（状态不是关闭的） 通过household number
     // 1-employee 2-Customer 3-partner
     public Case[] getCaseList(Integer number,Integer type){
@@ -105,5 +107,15 @@ public class CaseService {
         }else{
             return caseMapper.getCaseByPartnerNumber(number);
         } 
+    }
+
+    //查caselist（状态不是关闭的） 通过household number
+    // 1-assigned to(new->in progress)
+    public Integer updateCaseByNumber(Integer number,Integer type,Integer assigned_to){
+        if(type == 1){
+            return caseMapper.updateCaseFromNewToInProgree(number,assigned_to);
+        }else{
+            return 0;
+        }
     }
 }

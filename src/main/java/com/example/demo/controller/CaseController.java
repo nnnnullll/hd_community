@@ -30,6 +30,15 @@ public class CaseController {
         return caseService.getCaseByNumber(number);
     }
 
+    // 更新case 通过case number
+    @PostMapping("/updatecasebynumber")
+    public Integer updateCaseByNumber(
+        @RequestParam(value = "number") Integer number,
+        @RequestParam(value = "assigned_to") Integer assigned_to,
+        @RequestParam(value = "type") Integer type) {
+        return caseService.updateCaseByNumber(number,type,assigned_to);
+    }
+
     // 查caselist（状态不是关闭的） 通过household number
      // 1-employee 2-Customer 3-partner
     @PostMapping("/getcaselist")
