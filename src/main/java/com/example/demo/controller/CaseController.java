@@ -35,8 +35,10 @@ public class CaseController {
     public Integer updateCaseByNumber(
         @RequestParam(value = "number") Integer number,
         @RequestParam(value = "assigned_to") Integer assigned_to,
+        @RequestParam(value = "message") String message,
+        @RequestParam(value = "updateduser") Integer updateduser,
         @RequestParam(value = "type") Integer type) {
-        return caseService.updateCaseByNumber(number,type,assigned_to);
+        return caseService.updateCaseByNumber(number,type,assigned_to,message,updateduser);
     }
 
     // 查caselist（状态不是关闭的） 通过household number

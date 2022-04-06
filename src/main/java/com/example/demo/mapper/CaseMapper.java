@@ -29,6 +29,18 @@ public interface CaseMapper {
 //case update
     @Update("update `case` set `case`.state=1,`case`.assigned_to=#{assigned_to} where `case`.number=#{number};")
     Integer updateCaseFromNewToInProgree(Integer number,Integer assigned_to);
+    @Update("update `case` set `case`.state=2 where `case`.number=#{number};")
+    Integer updateCaseFromInProgreeToAwaitingInfo(Integer number);
+    @Update("update `case` set `case`.state=3,`case`.fix_state=2,`case`.fix_assigned_to=#{fix_assigned_to} where `case`.number=#{number};")
+    Integer updateCaseFromInProgreeToInFix(Integer number,Integer fix_assigned_to);
+    @Update("update `case` set `case`.state=4,`case`.solution=#{solution} where `case`.number=#{number};")
+    Integer updateCaseFromToResolved(Integer number,String solution);
+    @Update("update `case` set `case`.fix_state=3 where `case`.number=#{number};")
+    Integer updateCaseFromFixassignedToInfix(Integer number);
+    @Update("update `case` set `case`.fix_state=1 where `case`.number=#{number};")
+    Integer updateCaseFromFixassignedToAwaitingfixAssigned(Integer number);
+    @Update("update `case` set `case`.fix_state=4 where `case`.number=#{number};")
+    Integer updateCaseFromFixassignedToFinishfix(Integer number);
 
 //Employee Dash  
 // Integer newnumber;
