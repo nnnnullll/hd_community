@@ -29,6 +29,8 @@ public interface CaseMapper {
 //case update
     @Update("update `case` set `case`.state=1,`case`.assigned_to=#{assigned_to} where `case`.number=#{number};")
     Integer updateCaseFromNewToInProgree(Integer number,Integer assigned_to);
+    @Update("update `case` set `case`.state=1 where `case`.number=#{number};")
+    Integer updateCaseFromAwaitingInfoToInProgree(Integer number);
     @Update("update `case` set `case`.state=2 where `case`.number=#{number};")
     Integer updateCaseFromInProgreeToAwaitingInfo(Integer number);
     @Update("update `case` set `case`.state=3,`case`.fix_state=2,`case`.fix_assigned_to=#{fix_assigned_to} where `case`.number=#{number};")

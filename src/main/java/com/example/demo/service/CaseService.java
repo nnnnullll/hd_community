@@ -114,7 +114,7 @@ public class CaseService {
         Case casetemp = new Case();
         casetemp = caseMapper.getCaseByNumber(number);
         // 1-employee方
-        if(type==1||type==2||type==3||type==4){
+        if(type==1||type==2||type==3||type==4||type==8){
             Employee employee = new Employee();
             employee = employeeMapper.getEmployeeByNumber(updateduser);
             // type=1-assigned to(new->in progress)
@@ -166,11 +166,16 @@ public class CaseService {
                 }else{
                     return 0;
                 }
-            }else{
+            }
+            // type=8 留言
+            else if(type == 8){
+                return activityMapper.insertActivity(number, "留言：" + message, employee.getName(), 1 , employee.getNumber());
+            }
+            else{
                 return 0;
             }
         //3- partner
-        }else if(type==5||type==6){
+        }else if(type==5||type==6||type==7||type==10){
             partner partner = new partner();
             partner = partnerMapper.getPartnerByNum(updateduser);
             // type=5 接收维修单 维修状态：维修中 ← 已分配
@@ -196,12 +201,34 @@ public class CaseService {
                 }else{
                     return 0;
                 }
-            }else{
+            }
+            // type=8 留言
+            else if(type == 10){
+                return activityMapper.insertActivity(number, "留言：" + message, partner.getName(), 3 , partner.getNum());
+            }
+            else{
                 return 0;
             }
         }
+        // 2-household
         else{
-            return 0;
+            Household household = new Household();
+            household = householdMapper.getHouseholdByNumber(updateduser);
+            if(type==9){
+                // 待补充 状态：受理中 ← 待补充 ；留言：xxxx
+                if(casetemp.getState()==2){    
+                    if(caseMapper.updateCaseFromAwaitingInfoToInProgree(number)==1){
+                        return activityMapper.insertActivity(number, "状态：受理中 ← 待补充; 留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                    }else{
+                        return 0;
+                    }
+                // 留言
+                }else{
+                    return activityMapper.insertActivity(number, "留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                }
+            }else{
+                return 0;
+            } 
         }       
     }
 }
