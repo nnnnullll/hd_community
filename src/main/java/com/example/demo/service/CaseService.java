@@ -77,6 +77,7 @@ public class CaseService {
             keyValueassignedto.setName(employeeMapper.getEmployeeByNumber(casetemp.getAssigned_to()).getName());
         caseDetail.setAssigned_to(keyValueassignedto);
         caseDetail.setState(casetemp.getState());//state
+        caseDetail.setFix_state(casetemp.getFix_state());
         KeyValue keyValuefixassignedto = new KeyValue();//fix_assigned to
         keyValuefixassignedto.setNumber(casetemp.getFix_assigned_to());
         if(casetemp.getFix_assigned_to()!= null)
@@ -99,14 +100,16 @@ public class CaseService {
     
     //查caselist（状态不是关闭的） 通过household number
     // 1-employee 2-Customer 3-partner
-    public Case[] getCaseList(Integer number,Integer type){
+    public Case[] getCaseList(Integer number,Integer type, String company){
         if(type == 1){
             return caseMapper.getCaseByEmployeeNumber(number);
         }else if(type == 2){
             return caseMapper.getCaseByHouseholdNumber(number);
-        }else{
+        }else if(type==3){
             return caseMapper.getCaseByPartnerNumber(number);
-        } 
+        }else{
+            return caseMapper.getCaseByCompanyNumber(company);
+        }
     }
 
     //update case  state  button list
@@ -119,10 +122,20 @@ public class CaseService {
             employee = employeeMapper.getEmployeeByNumber(updateduser);
             // type=1-assigned to(new->in progress)
             if(type == 1){
-                if(caseMapper.updateCaseFromNewToInProgree(number,assigned_to)==1){
-                    return activityMapper.insertActivity(number, "状态：受理中 ← 新建" , employee.getName(), 1 , employee.getNumber());
+                Employee emp = new Employee();
+                emp = employeeMapper.getEmployeeByNumber(assigned_to);
+                if(casetemp.getState()==0){
+                    if(caseMapper.updateCaseFromNewToInProgree(number,assigned_to)==1){
+                        return activityMapper.insertActivity(number, "投诉单分配给员工: "+ emp.getName() +"; 状态：受理中 ← 新建" , employee.getName(), 1 , employee.getNumber());
+                    }else{
+                        return 0;
+                    }
                 }else{
-                    return 0;
+                    if(caseMapper.updateCaseAssignedTo(number,assigned_to)==1){
+                        return activityMapper.insertActivity(number, "投诉单分配给员工: "+ emp.getName()  , employee.getName(), 1 , employee.getNumber());
+                    }else{
+                        return 0;
+                    }
                 }
             }
             // type=2-awaiting info(in progress->awaiting info)
@@ -189,7 +202,7 @@ public class CaseService {
             // type=6 拒绝维修单 维修状态：待分配 ← 已分配
             else if(type==6){
                 if(caseMapper.updateCaseFromFixassignedToAwaitingfixAssigned(number)==1){
-                    return activityMapper.insertActivity(number, "接受该维修任务。维修状态：维修中 ← 已分配" , partner.getName(), 3, partner.getNum());
+                    return activityMapper.insertActivity(number, "拒绝该维修任务。维修状态：待分配 ← 已分配" , partner.getName(), 3, partner.getNum());
                 }else{
                     return 0;
                 }
@@ -217,8 +230,16 @@ public class CaseService {
             if(type==9){
                 // 待补充 状态：受理中 ← 待补充 ；留言：xxxx
                 if(casetemp.getState()==2){    
-                    if(caseMapper.updateCaseFromAwaitingInfoToInProgree(number)==1){
+                    if(caseMapper.updateCaseToInProgree(number)==1){
                         return activityMapper.insertActivity(number, "状态：受理中 ← 待补充; 留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                    }else{
+                        return 0;
+                    }
+                }
+                //  状态：受理中 ← 已解决 ；留言：xxxx
+                else if(casetemp.getState()== 4){    
+                    if(caseMapper.updateCaseToInProgree(number)==1){
+                        return activityMapper.insertActivity(number, "状态：受理中 ← 已解决; 留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
                     }else{
                         return 0;
                     }

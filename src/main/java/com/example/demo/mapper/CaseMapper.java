@@ -20,17 +20,22 @@ public interface CaseMapper {
     //查caselist(状态不是关闭的) 通过household number
     @Select("SELECT * FROM `case` where `case`.household=#{number} order by number asc;")
     Case[] getCaseByHouseholdNumber(Integer number);
-    //查caselist(状态不是关闭的) 通过household number
+    //查caselist(状态不是关闭的) 通过employee number
     @Select("SELECT * FROM `case` where `case`.assigned_to=#{number} order by number asc;")
     Case[] getCaseByEmployeeNumber(Integer number);
-    //查caselist(状态不是关闭的) 通过household number
+    //查ALL caselist(状态不是关闭的) 通过company number
+    @Select("SELECT * FROM `case` where `case`.company=#{number} order by number asc;")
+    Case[] getCaseByCompanyNumber(String number);
+    //查caselist(状态不是关闭的) 通过partner number
     @Select("SELECT * FROM `case` where `case`.fix_assigned_to=#{number} order by number asc;")
     Case[] getCaseByPartnerNumber(Integer number);
 //case update
     @Update("update `case` set `case`.state=1,`case`.assigned_to=#{assigned_to} where `case`.number=#{number};")
     Integer updateCaseFromNewToInProgree(Integer number,Integer assigned_to);
+    @Update("update `case` set `case`.assigned_to=#{assigned_to} where `case`.number=#{number};")
+    Integer updateCaseAssignedTo(Integer number,Integer assigned_to);
     @Update("update `case` set `case`.state=1 where `case`.number=#{number};")
-    Integer updateCaseFromAwaitingInfoToInProgree(Integer number);
+    Integer updateCaseToInProgree(Integer number);
     @Update("update `case` set `case`.state=2 where `case`.number=#{number};")
     Integer updateCaseFromInProgreeToAwaitingInfo(Integer number);
     @Update("update `case` set `case`.state=3,`case`.fix_state=2,`case`.fix_assigned_to=#{fix_assigned_to} where `case`.number=#{number};")
@@ -39,7 +44,7 @@ public interface CaseMapper {
     Integer updateCaseFromToResolved(Integer number,String solution);
     @Update("update `case` set `case`.fix_state=3 where `case`.number=#{number};")
     Integer updateCaseFromFixassignedToInfix(Integer number);
-    @Update("update `case` set `case`.fix_state=1 where `case`.number=#{number};")
+    @Update("update `case` set `case`.fix_state=1, `case`.fix_assigned_to=null where `case`.number=#{number};")
     Integer updateCaseFromFixassignedToAwaitingfixAssigned(Integer number);
     @Update("update `case` set `case`.fix_state=4 where `case`.number=#{number};")
     Integer updateCaseFromFixassignedToFinishfix(Integer number);

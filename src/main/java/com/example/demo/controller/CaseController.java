@@ -44,9 +44,10 @@ public class CaseController {
     // 查caselist（状态不是关闭的） 通过household number
      // 1-employee 2-Customer 3-partner
     @PostMapping("/getcaselist")
-    public Case[] getCaseByHouseholdNumber(
+    public Case[] getCaseList(
         @RequestParam(value = "type") Integer type,
-        @RequestParam(value = "number") Integer number) {
-        return caseService.getCaseList(number,type);
+        @RequestParam(value = "number") Integer number,
+        @RequestParam(value = "company") String company) {
+        return caseService.getCaseList(number,type,company);
     }
 }
