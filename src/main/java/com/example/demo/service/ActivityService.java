@@ -19,16 +19,16 @@ public class ActivityService {
     @Autowired
     PartnerMapper partnerMapper;
     //插入Activity
-    public Integer insertActivity(Integer case_number,String message, Integer updated_role,Integer updated_by){
-        //2-Customer 1-employee 3-partner
-        String updated_name;
-        if(updated_role == 1){
-            updated_name = employeeMapper.getEmployeeByNumber(updated_by).getName();
-        }else if(updated_role == 2){
-            updated_name = householdMapper.getHouseholdByNumber(updated_by).getBuilding() + "楼" + householdMapper.getHouseholdByNumber(updated_by).getRoom_number() + "室住户";
-        }else{
-            updated_name = partnerMapper.getPartnerByNum(updated_by).getName();
-        }
-        return activityMapper.insertActivity(case_number, message, updated_name, updated_role, updated_by);
-    }
+    // public Integer insertActivity(Integer case_number,String message, Integer updated_role,Integer updated_by){
+    //     //2-Customer 1-employee 3-partner
+    //     String updated_name;
+    //     if(updated_role == 1){
+    //         updated_name = employeeMapper.getEmployeeByNumber(updated_by).getName();
+    //     }else if(updated_role == 2){
+    //         updated_name = householdMapper.getHouseholdByNumber(updated_by).getBuilding() + "楼" + householdMapper.getHouseholdByNumber(updated_by).getRoom_number() + "室住户";
+    //     }else{
+    //         updated_name = partnerMapper.getPartnerByNum(updated_by).getName();
+    //     }
+    //     return activityMapper.insertActivity(case_number, message, updated_name, updated_role, updated_by);
+    // }
 }
