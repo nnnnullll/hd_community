@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface PartnerMapper {
     //插partner
-    @Insert("INSERT INTO `partner`(name,address,phone,email, password) VALUES(#{partner.name},#{partner.address},#{partner.phone},#{partner.email},#{partner.password})")
+    @Insert("INSERT INTO `partner`(name,address,phone,email, password) VALUES(#{partner.name},#{partner.address},#{partner.phone},#{partner.email},#{partner.password},,#{partner.description},,#{partner.one},,#{partner.two},,#{partner.three},,#{partner.four},,#{partner.five})")
     @Options(useGeneratedKeys=true, keyProperty="partner.num")
     Integer InsertPartner(@Param("partner") partner partner);
 

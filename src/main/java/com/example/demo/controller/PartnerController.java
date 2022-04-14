@@ -16,8 +16,14 @@ public class PartnerController {
     @RequestParam(value = "name") String name,
     @RequestParam(value = "address") String address,
     @RequestParam(value = "phone") String phone,
-    @RequestParam(value = "email") String email){
-        return partnerService.insertPartner(name, address, phone, email);
+    @RequestParam(value = "email") String email,
+    @RequestParam(value = "description") String description,
+    @RequestParam(value = "one") Integer one,
+    @RequestParam(value = "two") Integer two,
+    @RequestParam(value = "three") Integer three,
+    @RequestParam(value = "four") Integer four,
+    @RequestParam(value = "five") Integer five){
+        return partnerService.insertPartner(name, address, phone, email, description, one, two, three, four, five);
     } 
 
     @PostMapping("/getpartnerbynum")
