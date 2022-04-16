@@ -28,6 +28,7 @@ public class EmployeeService {
             return employee.getNumber();
         }
     }
+    
 
     //type=1 查employee 通过number(唯一一条记录)
     //type=2 查employee 通过company number(多条记录)

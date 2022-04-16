@@ -21,6 +21,14 @@ public class HouseholdController {
         @RequestParam(value = "password") String password){
         return householdService.insertHousehold(community, building, room_number, password);
     }
+
+    @PostMapping("/updatehousehold")
+    public Integer updatedhousehold(
+        @RequestParam(value = "number") Integer number,
+        @RequestParam(value = "email") String email,
+        @RequestParam(value = "phone") String phone){
+        return householdService.updateHousehold(number, email, phone);
+    }
     
     //type=1 查household 通过number(唯一一条记录)
     //type=2 查household 通过community number(多条记录)

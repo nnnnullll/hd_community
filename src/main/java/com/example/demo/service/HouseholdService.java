@@ -22,6 +22,10 @@ public class HouseholdService {
         return householdMapper.insertHousehold(community, building, room_number, password);
     } 
 
+    public Integer updateHousehold(Integer number, String email, String phone){
+        return householdMapper.updateHousehold(number, email, phone);
+    } 
+
     //查household 通过number(唯一一条记录)
     //查household 通过community number(多条记录)
     public Household[] getHousehold(Integer type,Integer number,Integer community,String company){

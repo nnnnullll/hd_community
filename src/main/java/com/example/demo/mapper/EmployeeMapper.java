@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface EmployeeMapper {
@@ -14,6 +15,9 @@ public interface EmployeeMapper {
     @Insert("insert into `employee`(name,company,id,phone,email,password,admin) values(#{employee.name},#{employee.company},#{employee.id},#{employee.phone},#{employee.email},#{employee.phone},#{employee.admin});")
     @Options(useGeneratedKeys=true, keyProperty="employee.number")
     Integer InsertEmployee(@Param("employee") Employee employee);
+    //插入employee
+    @Update("update `employee` set `employee`.phone = #{employee.phone},`employee`.email = #{employee.email} where `employee`.number = #{employee.number};")
+    Integer UpdateEmployee(@Param("employee") Employee employee);
     //核实是否已存在-身份证
     @Select("SELECT count(*) FROM `employee` where `employee`.id=#{id}")
     Integer validateEmployeeByID(String id);
