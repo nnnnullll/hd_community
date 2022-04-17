@@ -29,6 +29,15 @@ public class EmployeeController {
         return employeeService.insertEmployee(name, company, id, phone, email, admin);
     }
 
+    @PostMapping("/updateemployee")
+    public Integer updateemployee(
+        @RequestParam(value = "number") Integer number,
+        @RequestParam(value = "phone") String phone,
+        @RequestParam(value = "email") String email,
+        @RequestParam(value = "type") Integer type){
+        return employeeService.updateEmployee(number, phone, email, type);
+    }
+
     //type=1 查employee 通过number(唯一一条记录)
     //type=2 查employee 通过company number(多条记录)
     @PostMapping("/getemployee")

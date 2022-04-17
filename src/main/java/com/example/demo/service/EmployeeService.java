@@ -28,6 +28,33 @@ public class EmployeeService {
             return employee.getNumber();
         }
     }
+
+    // type=1 更新个人信息  type=2 active/inactive复职离职 type=3 admin给予权限/授予权限
+    public Integer updateEmployee(Integer number,String phone,String email, Integer type){
+        if( type==1 ){
+            if(employeeMapper.validateEmployeeByPhone(phone)>=1){
+                return 0;
+            }else{
+                Employee employee = new Employee();
+                employee.setNumber(number);
+                employee.setEmail(email);
+                employee.setPhone(phone);
+                return employeeMapper.updateEmployee(employee);
+            }
+        }else if( type==2 ){
+            if(employeeMapper.getEmployeeByNumber(number).getActive()==1){
+                return employeeMapper.updateEmployeeActive(number);
+            }else{
+                return employeeMapper.updateEmployeeInActive(number);
+            }
+        }else{
+            if(employeeMapper.getEmployeeByNumber(number).getAdmin()==0){
+                return employeeMapper.updateEmployeeAdmin(number);
+            }else{
+                return employeeMapper.updateEmployeeInAdmin(number);
+            }
+        }   
+    }
     
 
     //type=1 查employee 通过number(唯一一条记录)

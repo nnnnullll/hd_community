@@ -34,13 +34,12 @@ public class PartnerService {
         }
     }
 
-    public Integer updatePartner( String num, String name, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five){
-        if(partnerMapper.getPartnerAmountByPhone(phone)>=2 || partnerMapper.getPartnerAmountByName(name)>=2){
+    public Integer updatePartner( String num, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five){
+        if(partnerMapper.getPartnerAmountByPhone(phone)>=2){
             return 0;
         }else{
             partner partner = new partner();
             partner.setNum(Integer.valueOf(num));;
-            partner.setName(name);
             partner.setEmail(email);
             partner.setPhone(phone);
             partner.setAddress(address);

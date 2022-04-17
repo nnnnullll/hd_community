@@ -29,7 +29,6 @@ public class PartnerController {
     @PostMapping("/updatepartner")
     public Integer updatePartner(
     @RequestParam(value = "num") String num,
-    @RequestParam(value = "name") String name,
     @RequestParam(value = "address") String address,
     @RequestParam(value = "phone") String phone,
     @RequestParam(value = "email") String email,
@@ -39,7 +38,7 @@ public class PartnerController {
     @RequestParam(value = "three") Integer three,
     @RequestParam(value = "four") Integer four,
     @RequestParam(value = "five") Integer five){
-        return partnerService.updatePartner(num, name, address, phone, email, description, one, two, three, four, five);
+        return partnerService.updatePartner(num, address, phone, email, description, one, two, three, four, five);
     } 
 
     @PostMapping("/getpartnerbynum")
