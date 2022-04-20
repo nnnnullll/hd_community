@@ -27,11 +27,14 @@ public interface EmployeeMapper {
     @Update("update `employee` set `employee`.admin = 1 where `employee`.number = #{number};")
     Integer updateEmployeeAdmin(Integer number);
     //核实是否已存在-身份证
-    @Select("SELECT count(*) FROM `employee` where `employee`.id=#{id}")
-    Integer validateEmployeeByID(String id);
+    @Select("SELECT count(*) FROM `employee` where `employee`.id=#{id} and `employee`.company=#{company}")
+    Integer validateEmployeeByID(String id, String company);
     //核实是否已存在-手机
-    @Select("SELECT count(*) FROM `employee` where `employee`.phone=#{phone}")
-    Integer validateEmployeeByPhone(String phone);
+    @Select("SELECT count(*) FROM `employee` where `employee`.phone=#{phone} and `employee`.company=#{company}")
+    Integer validateEmployeeByPhone(String phone, String company);
+    //核实是否已存在-email
+    @Select("SELECT count(*) FROM `employee` where `employee`.email=#{email} and `employee`.company=#{company}")
+    Integer validateEmployeeByEmail(String email, String company);
 
     //查employee 通过number(唯一一条记录)
     @Select("SELECT * FROM `employee` where `employee`.number=#{number}")

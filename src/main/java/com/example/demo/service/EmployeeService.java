@@ -13,9 +13,14 @@ public class EmployeeService {
     CaseMapper caseMapper;
     @Autowired
     CompanyMapper companyMapper;
+
     public Integer insertEmployee(String name,String company,String id,String phone,String email,Integer admin){
-        if(employeeMapper.validateEmployeeByID(id)>=1 || employeeMapper.validateEmployeeByPhone(phone)>=1){
+        if(employeeMapper.validateEmployeeByID(id,company)>=1){
             return 0;
+        }else if(employeeMapper.validateEmployeeByPhone(phone,company)>=1){
+            return 1;
+        }else if(employeeMapper.validateEmployeeByEmail(email,company)>=1){
+            return 2;
         }else{
             Employee employee = new Employee();
             employee.setAdmin(admin);
@@ -31,9 +36,13 @@ public class EmployeeService {
 
     // type=1 更新个人信息  type=2 active/inactive复职离职 type=3 admin给予权限/授予权限
     public Integer updateEmployee(Integer number,String phone,String email, Integer type){
+        Employee employeet = new Employee();
+        employeet = employeeMapper.getEmployeeByNumber(number);
         if( type==1 ){
-            if(employeeMapper.validateEmployeeByPhone(phone)>=1){
+            if(employeeMapper.validateEmployeeByPhone(phone,employeet.getCompany())>=1){
                 return 0;
+            }else if(employeeMapper.validateEmployeeByEmail(email,employeet.getCompany())>=1){
+                return 2;
             }else{
                 Employee employee = new Employee();
                 employee.setNumber(number);
