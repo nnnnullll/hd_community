@@ -42,13 +42,13 @@ public class EmployeeService {
                 return employeeMapper.updateEmployee(employee);
             }
         }else if( type==2 ){
-            if(employeeMapper.getEmployeeByNumber(number).getActive()==1){
+            if(employeeMapper.getEmployeeActiveByNumber(number)==1){
                 return employeeMapper.updateEmployeeActive(number);
             }else{
                 return employeeMapper.updateEmployeeInActive(number);
             }
         }else{
-            if(employeeMapper.getEmployeeByNumber(number).getAdmin()==0){
+            if(employeeMapper.getEmployeeAdminByNumber(number)==0){
                 return employeeMapper.updateEmployeeAdmin(number);
             }else{
                 return employeeMapper.updateEmployeeInAdmin(number);

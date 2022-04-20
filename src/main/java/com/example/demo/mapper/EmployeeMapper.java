@@ -18,13 +18,13 @@ public interface EmployeeMapper {
     //插入employee
     @Update("update `employee` set `employee`.phone = #{employee.phone},`employee`.email = #{employee.email} where `employee`.number = #{employee.number};")
     Integer updateEmployee(@Param("employee") Employee employee);
-    @Update("update `employee` set `employee`.active = 0 where `employee`.number = number;")
+    @Update("update `employee` set `employee`.active = 0 where `employee`.number = #{number};")
     Integer updateEmployeeActive(Integer number);
-    @Update("update `employee` set `employee`.active = 1 where `employee`.number = number;")
+    @Update("update `employee` set `employee`.active = 1 where `employee`.number = #{number};")
     Integer updateEmployeeInActive(Integer number);
-    @Update("update `employee` set `employee`.admin = 0 where `employee`.number = number;")
+    @Update("update `employee` set `employee`.admin = 0 where `employee`.number = #{number};")
     Integer updateEmployeeInAdmin(Integer number);
-    @Update("update `employee` set `employee`.admin = 1 where `employee`.number = number;")
+    @Update("update `employee` set `employee`.admin = 1 where `employee`.number = #{number};")
     Integer updateEmployeeAdmin(Integer number);
     //核实是否已存在-身份证
     @Select("SELECT count(*) FROM `employee` where `employee`.id=#{id}")
@@ -34,7 +34,7 @@ public interface EmployeeMapper {
     Integer validateEmployeeByPhone(String phone);
 
     //查employee 通过number(唯一一条记录)
-    @Select("SELECT * FROM `employee` where `employee`.number=#{number} and `employee`.active=0")
+    @Select("SELECT * FROM `employee` where `employee`.number=#{number}")
     Employee getEmployeeByNumber(Integer number);
 
     //查employee 通过company(多条记录)
@@ -47,6 +47,9 @@ public interface EmployeeMapper {
 
     //login 核实employee 通过number & password
     @Select("SELECT admin FROM `employee` where `employee`.number=#{username} and `employee`.active=0")
-    Integer getEmployeeActiveByNumber(Integer username);
+    Integer getEmployeeAdminByNumber(Integer number);
+    //login 核实employee 通过number & password
+    @Select("SELECT active FROM `employee` where `employee`.number=#{username}")
+    Integer getEmployeeActiveByNumber(Integer number);
 }
  
