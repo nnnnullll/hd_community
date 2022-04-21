@@ -34,14 +34,14 @@ public class EmployeeService {
         }
     }
 
-    // type=1 更新个人信息  type=2 active/inactive复职离职 type=3 admin给予权限/授予权限
-    public Integer updateEmployee(Integer number,String phone,String email, Integer type){
+    // type=1 更新个人信息  type=2 active/inactive复职离职 type=3 admin给予权限/授予权限 type=4 更改密码
+    public Integer updateEmployee(Integer number,String phone,String email, Integer type, String password, String oldpassword){
         Employee employeet = new Employee();
         employeet = employeeMapper.getEmployeeByNumber(number);
         if( type==1 ){
-            if(employeeMapper.validateEmployeeByPhone(phone,employeet.getCompany())>=1){
+            if(employeeMapper.validateEmployeeByPhone(phone,employeet.getCompany())>1){
                 return 0;
-            }else if(employeeMapper.validateEmployeeByEmail(email,employeet.getCompany())>=1){
+            }else if(employeeMapper.validateEmployeeByEmail(email,employeet.getCompany())>1){
                 return 2;
             }else{
                 Employee employee = new Employee();
@@ -56,11 +56,17 @@ public class EmployeeService {
             }else{
                 return employeeMapper.updateEmployeeInActive(number);
             }
-        }else{
+        }else if(type==3){
             if(employeeMapper.getEmployeeAdminByNumber(number)==0){
                 return employeeMapper.updateEmployeeAdmin(number);
             }else{
                 return employeeMapper.updateEmployeeInAdmin(number);
+            }
+        }else{
+            if(employeeMapper.validateEmployeeByPassword(number, oldpassword)==1){
+                return employeeMapper.updateEmployeePassword(number,password);
+            }else{
+                return 0;
             }
         }   
     }

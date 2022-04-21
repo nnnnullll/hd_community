@@ -26,8 +26,11 @@ public class HouseholdController {
     public Integer updatedhousehold(
         @RequestParam(value = "number") Integer number,
         @RequestParam(value = "email") String email,
-        @RequestParam(value = "phone") String phone){
-        return householdService.updateHousehold(number, email, phone);
+        @RequestParam(value = "phone") String phone,
+        @RequestParam(value = "type") Integer type,
+        @RequestParam(value = "password") String password,
+        @RequestParam(value = "oldpassword") String oldpassword){
+        return householdService.updateHousehold(number, email, phone, type, password, oldpassword);
     }
     
     //type=1 查household 通过number(唯一一条记录)

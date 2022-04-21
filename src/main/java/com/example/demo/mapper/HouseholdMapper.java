@@ -14,9 +14,10 @@ public interface HouseholdMapper {
     @Insert("INSERT INTO `household`(community,building,room_number,password) VALUES(#{community},#{building},#{room_number},#{password})")
     Integer insertHousehold(@Param("community") Integer community,@Param("building") Integer building,@Param("room_number") String room_number,@Param("password") String password);
 
-    //插入 household
     @Update("update `household` set `household`. email = #{email}, `household`. phone = #{phone} where `household`. number = #{number}")
     Integer updateHousehold( @Param("number") Integer number, @Param("email") String building,@Param("phone") String phone);
+    @Update("update `household` set `household`. password = #{password} where `household`. number = #{number}")
+    Integer updateHouseholdPassword( @Param("number") Integer number, @Param("password") String password);
 
     //查household 通过number(唯一一条记录)
     @Select("SELECT * FROM `household` where `household`.number=#{number}")

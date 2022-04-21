@@ -15,7 +15,7 @@ public interface EmployeeMapper {
     @Insert("insert into `employee`(name,company,id,phone,email,password,admin) values(#{employee.name},#{employee.company},#{employee.id},#{employee.phone},#{employee.email},#{employee.phone},#{employee.admin});")
     @Options(useGeneratedKeys=true, keyProperty="employee.number")
     Integer InsertEmployee(@Param("employee") Employee employee);
-    //插入employee
+    //改employee
     @Update("update `employee` set `employee`.phone = #{employee.phone},`employee`.email = #{employee.email} where `employee`.number = #{employee.number};")
     Integer updateEmployee(@Param("employee") Employee employee);
     @Update("update `employee` set `employee`.active = 0 where `employee`.number = #{number};")
@@ -26,6 +26,9 @@ public interface EmployeeMapper {
     Integer updateEmployeeInAdmin(Integer number);
     @Update("update `employee` set `employee`.admin = 1 where `employee`.number = #{number};")
     Integer updateEmployeeAdmin(Integer number);
+    @Update("update `employee` set `employee`.password = #{password} where `employee`.number = #{number};")
+    Integer updateEmployeePassword(Integer number,String password);
+    
     //核实是否已存在-身份证
     @Select("SELECT count(*) FROM `employee` where `employee`.id=#{id} and `employee`.company=#{company}")
     Integer validateEmployeeByID(String id, String company);
@@ -35,15 +38,6 @@ public interface EmployeeMapper {
     //核实是否已存在-email
     @Select("SELECT count(*) FROM `employee` where `employee`.email=#{email} and `employee`.company=#{company}")
     Integer validateEmployeeByEmail(String email, String company);
-
-    //查employee 通过number(唯一一条记录)
-    @Select("SELECT * FROM `employee` where `employee`.number=#{number}")
-    Employee getEmployeeByNumber(Integer number);
-
-    //查employee 通过company(多条记录)
-    @Select("SELECT * FROM `employee` where `employee`.company=#{company}")
-    Employee[] getEmployeeByCompany(String company);
-
     //login 核实employee 通过number & password
     @Select("SELECT count(*) FROM `employee` where `employee`.number=#{username} and `employee`.password=#{password} and `employee`.active=0")
     Integer validateEmployeeByPassword(Integer username, String password);
@@ -54,5 +48,11 @@ public interface EmployeeMapper {
     //login 核实employee 通过number & password
     @Select("SELECT active FROM `employee` where `employee`.number=#{username}")
     Integer getEmployeeActiveByNumber(Integer number);
+    //查employee 通过number(唯一一条记录)
+    @Select("SELECT * FROM `employee` where `employee`.number=#{number}")
+    Employee getEmployeeByNumber(Integer number);
+    //查employee 通过company(多条记录)
+    @Select("SELECT * FROM `employee` where `employee`.company=#{company}")
+    Employee[] getEmployeeByCompany(String company);
 }
  

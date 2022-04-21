@@ -34,8 +34,10 @@ public class EmployeeController {
         @RequestParam(value = "number") Integer number,
         @RequestParam(value = "phone") String phone,
         @RequestParam(value = "email") String email,
-        @RequestParam(value = "type") Integer type){
-        return employeeService.updateEmployee(number, phone, email, type);
+        @RequestParam(value = "type") Integer type,
+        @RequestParam(value = "password") String password,
+        @RequestParam(value = "oldpassword") String oldpassword){
+        return employeeService.updateEmployee(number, phone, email, type, password, oldpassword);
     }
 
     //type=1 查employee 通过number(唯一一条记录)
