@@ -37,8 +37,11 @@ public class PartnerController {
     @RequestParam(value = "two") Integer two,
     @RequestParam(value = "three") Integer three,
     @RequestParam(value = "four") Integer four,
-    @RequestParam(value = "five") Integer five){
-        return partnerService.updatePartner(num, address, phone, email, description, one, two, three, four, five);
+    @RequestParam(value = "five") Integer five,
+    @RequestParam(value = "type") Integer type,
+    @RequestParam(value = "password") String password,
+    @RequestParam(value = "oldpassword") String oldpassword){
+        return partnerService.updatePartner(num, address, phone, email, description, one, two, three, four, five, type, password, oldpassword);
     } 
 
     @PostMapping("/getpartnerbynum")

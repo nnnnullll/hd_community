@@ -34,24 +34,36 @@ public class PartnerService {
         }
     }
 
-    public Integer updatePartner( String num, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five){
-        if(partnerMapper.getPartnerAmountByPhone(phone)>=2){
-            return 0;
+    public Integer updatePartner( String num, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five, Integer type, String password, String oldpassword){
+        if(type==1){
+            if(partnerMapper.getPartnerAmountByPhone(phone)>=2){
+                return 0;
+            }else{
+                partner partner = new partner();
+                partner.setNum(Integer.valueOf(num));;
+                partner.setEmail(email);
+                partner.setPhone(phone);
+                partner.setAddress(address);
+                partner.setDescription(description);
+                partner.setOne(one);
+                partner.setTwo(two);
+                partner.setThree(three);
+                partner.setFour(four);
+                partner.setFive(five);
+                return partnerMapper.updatePartner(partner);
+            }
         }else{
-            partner partner = new partner();
-            partner.setNum(Integer.valueOf(num));;
-            partner.setEmail(email);
-            partner.setPhone(phone);
-            partner.setAddress(address);
-            partner.setPassword(phone);
-            partner.setDescription(description);
-            partner.setOne(one);
-            partner.setTwo(two);
-            partner.setThree(three);
-            partner.setFour(four);
-            partner.setFive(five);
-            return partnerMapper.updatePartner(partner);
+            if(partnerMapper.validatePartnerByPassword(Integer.valueOf(num), oldpassword)==1){
+                System.out.println(Integer.valueOf(num));
+                partner partner = new partner();
+                partner.setNum(Integer.valueOf(num));;
+                partner.setPassword(password);
+                return partnerMapper.updatePartnerPassword(partner);
+            }else{
+                return 0;
+            }
         }
+        
     }
 
     public partner getPartnerByNum(Integer num){

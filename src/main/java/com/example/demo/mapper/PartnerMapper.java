@@ -16,9 +16,10 @@ public interface PartnerMapper {
     @Options(useGeneratedKeys=true, keyProperty="partner.num")
     Integer InsertPartner(@Param("partner") partner partner);
 
-    //插partner
-    @Update("update `partner` set  `partner`.address = #{partner.address},`partner`.phone = #{partner.phone},`partner`.email = #{partner.email},`partner`.password = #{partner.password},`partner`.description = #{partner.description},`partner`.one = #{partner.one},`partner`.two = #{partner.two},`partner`.three = #{partner.three},`partner`.four = #{partner.four},`partner`.five = #{partner.five} where `partner`.num = #{partner.num} )")
+    @Update("update `partner` set  `partner`.address = #{partner.address},`partner`.phone = #{partner.phone},`partner`.email = #{partner.email},`partner`.description = #{partner.description},`partner`.one = #{partner.one},`partner`.two = #{partner.two},`partner`.three = #{partner.three},`partner`.four = #{partner.four},`partner`.five = #{partner.five} where `partner`.num = #{partner.num}")
     Integer updatePartner(@Param("partner") partner partner);
+    @Update("update `partner` set  `partner`.password = #{partner.password} where `partner`.num = #{partner.num}")
+    Integer updatePartnerPassword(@Param("partner") partner partner);
 
     //查partner 通过number(唯一一条记录)
     @Select("SELECT * FROM `partner` where `partner`.num=#{num} and `partner`.active=0")
