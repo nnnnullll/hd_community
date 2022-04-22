@@ -14,7 +14,7 @@ public class PartnerService {
     @Autowired
     RelationshipMapper relationshipMapper;
     public Integer insertPartner( String name, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five){
-        if(partnerMapper.getPartnerAmountByPhone(phone)>=1 || partnerMapper.getPartnerAmountByName(name)>=1){
+        if(partnerMapper.getPartnerAmountByName(name)>=1){
             return 0;
         }else{
             partner partner = new partner();
@@ -34,7 +34,7 @@ public class PartnerService {
         }
     }
 
-    public Integer updatePartner( String num, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five, Integer type, String password, String oldpassword){
+    public Integer updatePartner( String num, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five, Integer type, String password, String oldpassword, Integer active){
         if(type==1){
             if(partnerMapper.getPartnerAmountByPhone(phone)>=2){
                 return 0;
@@ -50,6 +50,7 @@ public class PartnerService {
                 partner.setThree(three);
                 partner.setFour(four);
                 partner.setFive(five);
+                partner.setActive(active);
                 return partnerMapper.updatePartner(partner);
             }
         }else{

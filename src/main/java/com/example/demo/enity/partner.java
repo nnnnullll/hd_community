@@ -14,7 +14,14 @@ public class partner {
     Integer three;
     Integer four;
     Integer five;
+    Integer active;
     
+    public Integer getActive() {
+        return active;
+    }
+    public void setActive(Integer active) {
+        this.active = active;
+    }
     public Integer getOne() {
         return one;
     }
