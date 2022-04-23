@@ -22,8 +22,9 @@ public class CommunityController {
         @RequestParam(value = "rooms") String rooms,
         @RequestParam(value = "name") String name,
         @RequestParam(value = "region") String region,
+        @RequestParam(value = "address") String address,
         @RequestParam(value = "company") String company){
-        return communityService.insertCommunity(name, region, company,buildings,rooms);
+        return communityService.insertCommunity(name, region,address, company,buildings,rooms);
     }
 
     //type=1 查community 通过community number(唯一一条记录)
@@ -41,6 +42,14 @@ public class CommunityController {
     public CommunityDetail getCommunitySetail(
         @RequestParam(value = "number") Integer number){
         return communityService.getCommunityDetail(number);
+    }
+
+    @PostMapping("/updatecommunity")
+    public Integer updateCommunity(
+        @RequestParam(value = "type") Integer type,
+        @RequestParam(value = "number") Integer number,
+        @RequestParam(value = "company") String company){
+        return communityService.updateCommunity(type ,number, company);
     }
 
 }

@@ -19,11 +19,13 @@ public class CommunityService {
     @Autowired
     HouseholdMapper householdMapper;
 
-    public Integer insertCommunity(String name,String region,String company,String buildings,String rooms){
+    public Integer insertCommunity(String name,String region,String address,String company,String buildings,String rooms){
+
         Community community = new Community();
         community.setName(name);
         community.setCompany(company);
         community.setRegion(region);
+        community.setAddress(address);
         communityMapper.insertCommunity(community);
         String str[] = rooms.split(",");
         List<String> room = Arrays.asList(str);
@@ -50,6 +52,28 @@ public class CommunityService {
         } 
     }
 
+    // type=1 解除合作 type=2 添加合作
+    public Integer updateCommunity(Integer type,Integer number,String company){
+        if(type==1){
+            if(communityMapper.validateActiveCommunityCompanyByNumber(number, company)==1){
+                communityMapper.updateCommunityRemoveCompanyByNumber(number);
+                return 1;
+            }else{
+                System.out.println(company);
+                System.out.println(communityMapper.getCommunityByNumber(number).getCompany());
+                return 0;//company不符
+            }
+        }else if(type==2){
+            if(communityMapper.validateInactiveCommunityByNumber(number)==1){
+                return communityMapper.updateCommunityAddCompanyByNumber(company,number);
+            }else{
+                return 0;// company不是空的
+            }
+        }else{
+            return 0;
+        }
+    }
+
     //查community 通过community number(唯一一条记录)
     public CommunityDetail getCommunityDetail(Integer number){
         CommunityDetail communityDetail=new CommunityDetail();
@@ -58,7 +82,7 @@ public class CommunityService {
         communityDetail.setNumber(community.getNumber());
         communityDetail.setName(community.getName());
         communityDetail.setCompany(community.getCompany());
-        communityDetail.setRegion(community.getRegion());
+        communityDetail.setAddress(community.getAddress());
         communityDetail.setActive(community.getActive());
         communityDetail.setBuilding_amount(householdMapper.getBuildingAmountByCommunity(number));
         communityDetail.setHousehold_amount(householdMapper.getHouseholdAmountByCommunity(number));

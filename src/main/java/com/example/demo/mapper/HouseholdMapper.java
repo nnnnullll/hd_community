@@ -28,7 +28,7 @@ public interface HouseholdMapper {
     Household[] getHouseholdByCommunity(Integer community);
 
     //查household 通过company number(多条记录)
-    @Select("SELECT * FROM `household` where `household`.company=#{company} and `household`.active=0")
+    @Select("SELECT * FROM `household` where `household`.company=#{company}")
     Household[] getHouseholdByCompany(String company);
 
 

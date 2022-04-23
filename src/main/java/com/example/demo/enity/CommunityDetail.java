@@ -4,7 +4,7 @@ package com.example.demo.enity;
 public class CommunityDetail {
     Integer number;
     String name;
-    String region;
+    String address;
     String company;
     Integer active;
     Integer building_amount;
@@ -41,11 +41,11 @@ public class CommunityDetail {
     public void setName(String name) {
         this.name = name;
     }
-    public String getRegion() {
-        return region;
+    public String getAddress() {
+        return address;
     }
-    public void setRegion(String region) {
-        this.region = region;
+    public void setAddress(String address) {
+        this.address = address;
     }
     public String getCompany() {
         return company;

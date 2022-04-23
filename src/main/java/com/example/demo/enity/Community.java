@@ -5,8 +5,16 @@ public class Community {
     Integer number;
     String name;
     String region;
+    String address;
     String company;
     Integer active;
+    
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
     public Integer getNumber() {
         return number;
     }
