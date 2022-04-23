@@ -25,10 +25,10 @@ public interface PartnerMapper {
     @Select("SELECT * FROM `partner` where `partner`.num=#{num}")
     partner getPartnerByNum(Integer num);
     //查partner 通过number(唯一一条记录)
-    @Select("SELECT active FROM `partner` where `partner`.num=#{num}")
+    @Select("SELECT active FROM `partner` where `partner`.num=#{num} and `partner`.active=#{num}")
     Integer getPartnerActiveByNum(Integer num);
     //查partner 所有
-    @Select("SELECT * FROM `partner` where `partner`.active=0")
+    @Select("SELECT * FROM `partner`")
     partner[] getAllPartner();
     //查partner 通过number(唯一一条记录)
     @Select("SELECT count(*) FROM `partner` where `partner`.phone=#{phone}")
@@ -38,7 +38,7 @@ public interface PartnerMapper {
     Integer getPartnerAmountByName(String name);
 
      //login 核实Partner 通过number & password
-    @Select("SELECT count(*) FROM `partner` where `partner`.num=#{username} and `partner`.password=#{password} and `partner`.active=0")
+    @Select("SELECT count(*) FROM `partner` where `partner`.num=#{username} and `partner`.password=#{password}")
     Integer validatePartnerByPassword(Integer username, String password);
  
 }

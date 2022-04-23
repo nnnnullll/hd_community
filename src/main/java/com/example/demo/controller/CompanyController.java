@@ -24,6 +24,16 @@ public class CompanyController {
         return companyService.insertCompany(number, name, address, phone, email);
     }
 
+    //插company
+    @PostMapping("/updatecompany")
+    public Integer updateCompany(
+        @RequestParam(value = "number") String number,
+        @RequestParam(value = "address") String address,
+        @RequestParam(value = "phone") String phone,
+        @RequestParam(value = "email") String email){
+        return companyService.updateCompany(number,address, phone, email);
+    }
+
     //type==1 通过number找company
     //type==2 partner通过relationship查维修公司合作的物业公司们
     @PostMapping("/getcompanies")

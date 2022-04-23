@@ -25,6 +25,11 @@ public class CompanyService {
     public Integer insertCompany(String number,String name,String address,String phone, String email){
         return companyMapper.insertCompany(number, name, address, phone, email);
     }
+
+    //插company
+    public Integer updateCompany(String number,String address,String phone, String email){
+        return companyMapper.updateCompany(number,address, phone, email);
+    }
    
     //查company by partner
     public Company[] getCompanies(Integer partner,Integer type , String number){
@@ -67,8 +72,6 @@ public class CompanyService {
         }else if(type ==3){
             if(partnerMapper.validatePartnerByPassword(username, password) == 1)
                 return 1;
-            else if(partnerMapper.getPartnerActiveByNum(username) == 1)
-                return 3;
             else
                 return 2;
         }else{
