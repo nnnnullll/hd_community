@@ -47,6 +47,8 @@ public class CommunityService {
             return community;
             case 2:
             return communityMapper.getCommunitiesByCompany(company);
+            case 3:
+            return communityMapper.getCommunityAll();
             default:
             return null;
         } 

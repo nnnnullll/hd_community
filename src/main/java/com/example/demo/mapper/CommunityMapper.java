@@ -17,11 +17,13 @@ public interface CommunityMapper {
     Integer insertCommunity(@Param("community") Community community);
 
     //查community 通过community number(唯一一条记录)
-    @Select("SELECT * FROM `community` where `community`.number=#{number} and `community`.active=0")
+    @Select("SELECT * FROM `community` where `community`.number=#{number}")
     Community getCommunityByNumber(Integer number);
     //查communities 通过company number(多条记录)
     @Select("SELECT * FROM `community` where `community`.company=#{company} and `community`.active=0")
     Community[] getCommunitiesByCompany(String company);
+    @Select("SELECT * FROM `community`")
+    Community[] getCommunityAll();
 
     @Select("SELECT count(*) FROM `community` where `community`.number=#{number} and `community`.active=1")
     Integer validateInactiveCommunityByNumber(Integer number);
