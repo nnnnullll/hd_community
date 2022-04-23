@@ -7,8 +7,6 @@ import com.example.demo.mapper.PartnerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ch.qos.logback.core.joran.conditional.ElseAction;
-
 @Service
 public class CompanyService {
     @Autowired
