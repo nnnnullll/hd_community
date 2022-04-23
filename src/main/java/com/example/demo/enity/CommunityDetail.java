@@ -9,6 +9,14 @@ public class CommunityDetail {
     Integer active;
     Integer building_amount;
     Integer household_amount;
+    Household[] households;
+    
+    public Household[] getHouseholds() {
+        return households;
+    }
+    public void setHouseholds(Household[] households) {
+        this.households = households;
+    }
     public Integer getBuilding_amount() {
         return building_amount;
     }

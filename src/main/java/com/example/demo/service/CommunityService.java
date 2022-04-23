@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.demo.enity.Community;
 import com.example.demo.enity.CommunityDetail;
+import com.example.demo.enity.Household;
 import com.example.demo.mapper.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,9 @@ public class CommunityService {
         communityDetail.setActive(community.getActive());
         communityDetail.setBuilding_amount(householdMapper.getBuildingAmountByCommunity(number));
         communityDetail.setHousehold_amount(householdMapper.getHouseholdAmountByCommunity(number));
+        Household[] households = new Household[householdMapper.getHouseholdAmountByCommunity(number)];
+        households = householdMapper.getHouseholdByCommunity(number);
+        communityDetail.setHouseholds(households);
         return communityDetail;
     }
 }
