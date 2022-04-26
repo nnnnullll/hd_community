@@ -184,6 +184,7 @@ public class CaseService {
             else if(type == 8){
                 return activityMapper.insertActivity(number, "留言：" + message, employee.getName(), 1 , employee.getNumber());
             }
+            // type=11 留言
             else{
                 return 0;
             }
@@ -246,6 +247,20 @@ public class CaseService {
                 // 留言
                 }else{
                     return activityMapper.insertActivity(number, "留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                }
+            }else if(type == 11){
+                if(caseMapper.getFixStateByNumber(number)==0){
+                    if(caseMapper.updateCaseFromClosed(number)==1){
+                        return activityMapper.insertActivity(number, "住户关闭该投诉单", household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                    }else{
+                        return 0;
+                    }
+                }else{
+                    if(caseMapper.updateCaseFromClosedAndFixClosed(number)==0){
+                        return activityMapper.insertActivity(number, "住户关闭该投诉单", household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                    }else{
+                        return 0;
+                    }
                 }
             }else{
                 return 0;

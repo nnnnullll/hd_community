@@ -48,6 +48,10 @@ public interface CaseMapper {
     Integer updateCaseFromFixassignedToAwaitingfixAssigned(Integer number);
     @Update("update `case` set `case`.fix_state=4 where `case`.number=#{number};")
     Integer updateCaseFromFixassignedToFinishfix(Integer number);
+    @Update("update `case` set `case`.state=5,`case`.escalation=0,`case`.emergency=0 where `case`.number=#{number};")
+    Integer updateCaseFromClosed(Integer number);
+    @Update("update `case` set `case`.state=5,`case`.fix_state=4,`case`.escalation=0,`case`.emergency=0 where `case`.number=#{number};")
+    Integer updateCaseFromClosedAndFixClosed(Integer number);
 
 //Employee Dash  
 // Integer newnumber;
@@ -73,6 +77,8 @@ public interface CaseMapper {
     //查Emergency case amount 通过 Assignedto
     @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.emergency=1;")
     Integer getEmergencyCaseAmountByAssignedTo(Integer number);
+    @Select("SELECT `case`.fix_state FROM `case` where `case`.number=#{number};")
+    Integer getFixStateByNumber(Integer number);
 
 
     //查new case amount 通过 CompanyNumber
