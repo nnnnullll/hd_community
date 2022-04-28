@@ -12,6 +12,8 @@ public class CompanyService {
     @Autowired
     CompanyMapper companyMapper;
     @Autowired
+    CommunityMapper communityMapper;
+    @Autowired
     EmployeeMapper employeeMapper;
     @Autowired
     HouseholdMapper householdMapper;
@@ -53,25 +55,44 @@ public class CompanyService {
 
     // type=1 employee  type=2 household  type=3 partner
     // type=1  return 0-no admin 1-admin 2-失败 3-已离职
-    // type=2/3 return 1-成功 2-失败
+    // type=2 return 1-成功 2-失败 3-停用
+    // type=3 return 1-成功 2-失败
     public Integer login(Integer username, String password,Integer type){
         if (type==1){
-            if(employeeMapper.validateEmployeeByPassword(username, password)==1)
-                return employeeMapper.getEmployeeAdminByNumber(username);
-            else if(employeeMapper.getEmployeeActiveByNumber(username) == 1 )
-                return 3;
-            else
-                return 2;   
+            if(employeeMapper.getCountEmployeeByNumber(username)==1){
+                if(employeeMapper.getEmployeeActiveByNumber(username) == 1 ){
+                    return 3;
+                }else{
+                    if(employeeMapper.validateEmployeeByPassword(username, password)==1)
+                        return employeeMapper.getEmployeeAdminByNumber(username);
+                    else
+                        return 2; 
+                }  
+            }else{
+                return 4;
+            }
         }else if(type==2){
-            if(householdMapper.validateHouseholdByPassword(username, password)==1)
-                return 1;
-            else
-                return 2;
+            if(householdMapper.getCountHouseholdByNumber(username)==1){
+                if(communityMapper.getActiveFromCommunityByNumber(householdMapper.getCommunityByNumber(username))==1){
+                    return 3;
+                }else{
+                    if(householdMapper.validateHouseholdByPassword(username, password)==1)
+                        return 1;
+                    else
+                        return 2;
+                } 
+            }else{
+                return 4;
+            }
         }else if(type ==3){
-            if(partnerMapper.validatePartnerByPassword(username, password) == 1)
-                return 1;
-            else
-                return 2;
+            if(partnerMapper.getCountPartnerByNum(username)==1){
+                if(partnerMapper.validatePartnerByPassword(username, password) == 1)
+                    return 1;
+                else
+                    return 2;
+            }else{
+                return 4;
+            } 
         }else{
             return 2;
         }  

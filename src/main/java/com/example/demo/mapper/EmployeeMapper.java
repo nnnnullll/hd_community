@@ -32,12 +32,18 @@ public interface EmployeeMapper {
     //核实是否已存在-身份证
     @Select("SELECT count(*) FROM `employee` where `employee`.id=#{id} and `employee`.company=#{company}")
     Integer validateEmployeeByID(String id, String company);
+    //核实是否已存在-email
+    @Select("SELECT count(*) FROM `employee` where `employee`.email=#{email} and `employee`.company=#{company}")
+    Integer validateEmployeeByEmail(String email, String company);
     //核实是否已存在-手机
     @Select("SELECT count(*) FROM `employee` where `employee`.phone=#{phone} and `employee`.company=#{company}")
     Integer validateEmployeeByPhone(String phone, String company);
     //核实是否已存在-email
-    @Select("SELECT count(*) FROM `employee` where `employee`.email=#{email} and `employee`.company=#{company}")
-    Integer validateEmployeeByEmail(String email, String company);
+    @Select("SELECT count(*) FROM `employee` where `employee`.email=#{email} and `employee`.company=#{company} and  `employee`.number!=#{number}")
+    Integer validateNoOtherEmployeeByEmail(Integer number,String email, String company);
+    //核实是否已存在-手机
+    @Select("SELECT count(*) FROM `employee` where `employee`.phone=#{phone} and `employee`.company=#{company} and  `employee`.number!=#{number}")
+    Integer validateNoOtherEmployeeByPhone(Integer number,String phone, String company);
     //login 核实employee 通过number & password
     @Select("SELECT count(*) FROM `employee` where `employee`.number=#{username} and `employee`.password=#{password} and `employee`.active=0")
     Integer validateEmployeeByPassword(Integer username, String password);
@@ -51,6 +57,8 @@ public interface EmployeeMapper {
     //查employee 通过number(唯一一条记录)
     @Select("SELECT * FROM `employee` where `employee`.number=#{number}")
     Employee getEmployeeByNumber(Integer number);
+    @Select("SELECT count(*) FROM `employee` where `employee`.number=#{number}")
+    Integer getCountEmployeeByNumber(Integer number);
     //查employee 通过company(多条记录)
     @Select("SELECT * FROM `employee` where `employee`.company=#{company}")
     Employee[] getEmployeeByCompany(String company);

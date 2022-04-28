@@ -39,9 +39,9 @@ public class EmployeeService {
         Employee employeet = new Employee();
         employeet = employeeMapper.getEmployeeByNumber(number);
         if( type==1 ){
-            if(employeeMapper.validateEmployeeByPhone(phone,employeet.getCompany())>1){
+            if(employeeMapper.validateNoOtherEmployeeByPhone(number,phone,employeet.getCompany())>=1){
                 return 0;
-            }else if(employeeMapper.validateEmployeeByEmail(email,employeet.getCompany())>1){
+            }else if(employeeMapper.validateNoOtherEmployeeByEmail(number,email,employeet.getCompany())>=1){
                 return 2;
             }else{
                 Employee employee = new Employee();
@@ -99,14 +99,14 @@ public class EmployeeService {
         employedashboard.setLine1("所属物业公司：             "+ companyName);
         employedashboard.setLine2("是否为超级管理员:             " + (employee.getAdmin()==0?"否":"是"));
         employedashboard.setIfadmin(employee.getAdmin());
-        
+
         employedashboard.setNewnumber(caseMapper.getNewCaseAmountByCompanyNumber(companyNumber));
         Integer inprogressnumber = caseMapper.getInProgressCaseAmountByAssignedTo(number) + caseMapper.getInFixCaseAmountByAssignedTo(number);
         employedashboard.setInprogressnumber(inprogressnumber);
         employedashboard.setEscalationnumber(caseMapper.getEscalationCaseAmountByAssignedTo(number));
         employedashboard.setEmergencynumber(caseMapper.getEmergencyCaseAmountByAssignedTo(number));
         employedashboard.setResolvednumber(caseMapper.getResoledCaseAmountByAssignedTo(number));
-        
+
         employedashboard.setStateChartTitle(companyName+"当前投诉单状态");
         Integer[] stateamount = new Integer[5];
         stateamount[0] = caseMapper.getNewCaseAmountByCompanyNumber(companyNumber);

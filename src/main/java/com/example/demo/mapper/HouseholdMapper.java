@@ -22,6 +22,8 @@ public interface HouseholdMapper {
     //查household 通过number(唯一一条记录)
     @Select("SELECT * FROM `household` where `household`.number=#{number}")
     Household getHouseholdByNumber(Integer number);
+    @Select("SELECT count(*) FROM `household` where `household`.number=#{number}")
+    Integer getCountHouseholdByNumber(Integer number);
 
     //查household 通过community number(多条记录)
     @Select("SELECT * FROM `household` where `household`.community=#{community}")
@@ -30,6 +32,9 @@ public interface HouseholdMapper {
     //查household 通过company number(多条记录)
     @Select("SELECT * FROM `household` where `household`.company=#{company}")
     Household[] getHouseholdByCompany(String company);
+    //查household 通过company number(多条记录)
+    @Select("SELECT community FROM `household` where `household`.number=#{number}")
+    Integer getCommunityByNumber(Integer number);
 
 
     //查household 通过community number(多条记录)

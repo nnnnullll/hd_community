@@ -60,11 +60,13 @@ public class HouseholdService {
         household = householdMapper.getHouseholdByNumber(number);
         householdDashboard.setLoginname(household.getBuilding()+"号楼"+household.getRoom_number()+"室");
         Community community = new Community();
+
         community = communityMapper.getCommunityByNumber(household.getCommunity());
         householdDashboard.setCommunitynumber(community.getNumber());
         householdDashboard.setLine1("所属社区：            " + community.getName());
         Company company = new Company();
         company = companyMapper.getCompanyByNumber(community.getCompany());
+        System.out.println(company.getNumber());
         householdDashboard.setCompanynumber(company.getNumber()); 
         householdDashboard.setLine2("所属物业：            " + company.getName());
         

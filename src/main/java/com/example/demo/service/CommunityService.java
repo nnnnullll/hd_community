@@ -15,8 +15,6 @@ public class CommunityService {
     @Autowired
     CommunityMapper communityMapper;
     @Autowired
-    BuildingMapper buildingMapper;
-    @Autowired
     HouseholdMapper householdMapper;
 
     public Integer insertCommunity(String name,String region,String address,String company,String buildings,String rooms){
@@ -59,6 +57,7 @@ public class CommunityService {
         if(type==1){
             if(communityMapper.validateActiveCommunityCompanyByNumber(number, company)==1){
                 communityMapper.updateCommunityRemoveCompanyByNumber(number);
+                
                 return 1;
             }else{
                 System.out.println(company);

@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface PartnerMapper {
     //插partner
-    @Insert("INSERT INTO `partner`(name,address,phone,email,description, password,one,two,three,four,five) VALUES(#{partner.name},#{partner.address},#{partner.phone},#{partner.email},#{partner.password},#{partner.description},#{partner.one},#{partner.two},#{partner.three},#{partner.four},#{partner.five})")
+    @Insert("INSERT INTO `partner`(name,address,phone,email,description, password,one,two,three,four,five) VALUES(#{partner.name},#{partner.address},#{partner.phone},#{partner.email},#{partner.description},#{partner.password},#{partner.one},#{partner.two},#{partner.three},#{partner.four},#{partner.five})")
     @Options(useGeneratedKeys=true, keyProperty="partner.num")
     Integer InsertPartner(@Param("partner") partner partner);
 
@@ -26,6 +26,8 @@ public interface PartnerMapper {
     //查partner 通过number(唯一一条记录)
     @Select("SELECT * FROM `partner` where `partner`.num=#{num}")
     partner getPartnerByNum(Integer num);
+    @Select("SELECT count(*) FROM `partner` where `partner`.num=#{num}")
+    Integer getCountPartnerByNum(Integer num);
     //查partner 通过number(唯一一条记录)
     @Select("SELECT active FROM `partner` where `partner`.num=#{num} and `partner`.active=#{num}")
     Integer getPartnerActiveByNum(Integer num);

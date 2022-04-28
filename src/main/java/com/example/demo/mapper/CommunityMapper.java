@@ -19,6 +19,9 @@ public interface CommunityMapper {
     //查community 通过community number(唯一一条记录)
     @Select("SELECT * FROM `community` where `community`.number=#{number}")
     Community getCommunityByNumber(Integer number);
+    //查community 通过community number(唯一一条记录)
+    @Select("SELECT active FROM `community` where `community`.number=#{number}")
+    Integer getActiveFromCommunityByNumber(Integer number);
     //查communities 通过company number(多条记录)
     @Select("SELECT * FROM `community` where `community`.company=#{company} and `community`.active=0")
     Community[] getCommunitiesByCompany(String company);
