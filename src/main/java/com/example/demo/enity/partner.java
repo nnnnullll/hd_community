@@ -15,7 +15,14 @@ public class partner {
     Integer four;
     Integer five;
     Integer active;
+    Integer ispartner;
     
+    public Integer getIspartner() {
+        return ispartner;
+    }
+    public void setIspartner(Integer ispartner) {
+        this.ispartner = ispartner;
+    }
     public Integer getActive() {
         return active;
     }

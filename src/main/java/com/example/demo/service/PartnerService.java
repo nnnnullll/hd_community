@@ -34,7 +34,8 @@ public class PartnerService {
         }
     }
 
-    public Integer updatePartner( String num, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five, Integer type, String password, String oldpassword, Integer active){
+    //type=1改信息 2-改密码 3-改active
+    public Integer updatePartner( String num, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five, Integer type, String password, String oldpassword,Integer active){
         if(type==1){
             if(partnerMapper.getPartnerAmountByPhone(phone)>=2){
                 return 0;
@@ -50,10 +51,9 @@ public class PartnerService {
                 partner.setThree(three);
                 partner.setFour(four);
                 partner.setFive(five);
-                partner.setActive(active);
                 return partnerMapper.updatePartner(partner);
             }
-        }else{
+        }else if(type==2){
             if(partnerMapper.validatePartnerByPassword(Integer.valueOf(num), oldpassword)==1){
                 System.out.println(Integer.valueOf(num));
                 partner partner = new partner();
@@ -63,46 +63,57 @@ public class PartnerService {
             }else{
                 return 0;
             }
+        }else{
+            partner partner = new partner();
+            partner.setNum(Integer.valueOf(num));;
+            partner.setActive(active);
+            if(relationshipMapper.updateInActiveByPartner(Integer.valueOf(num))==1){
+                return partnerMapper.updatePartnerActive(partner);
+            }else{
+                return 0;
+            }
+           
         }
         
     }
 
-    public partner getPartnerByNum(Integer num){
-        return partnerMapper.getPartnerByNum(num);
+    public partner getPartnerByNum(Integer num, String company){
+        partner partner = new partner();
+        partner = partnerMapper.getPartnerByNum(num);
+        if(company!="0"){
+            if(relationshipMapper.getActiveByPartnerAndCompany(partner.getNum(), company)==1){
+                partner.setIspartner(0);
+            }else{
+                partner.setIspartner(1);
+            }
+        }
+        return partner;
     }
     //type=1 查company的合作维修公司
-    //type=2 所有active的维修公司
+    //type=2 所有维修公司
     public partner[] getPartners(String company, Integer type){
         if( type == 1 ){
-            Integer amount = relationshipMapper.getPartnerAmountFromRelationshipByPartner(company);
+            Integer amount = relationshipMapper.getPartnerAmountFromRelationshipByCompany(company);
             Integer[] partnersnumber =new Integer[amount];
-            partnersnumber = relationshipMapper.getPartnerNumberFromRelationshipByPartner(company);
+            partnersnumber = relationshipMapper.getPartnerNumberFromRelationshipByCompany(company);
             partner[] partners = new partner[amount];
             for(Integer i=0;i<amount;i++){
                 partners[i]=partnerMapper.getPartnerByNum(partnersnumber[i]);
-                Integer[] relationshiptype = new Integer[5];
-                relationshiptype = relationshipMapper.getRelationshipTypeByPartnerAndCompany(partnersnumber[i],company);
-                String typeStr = "";
-                for(int j=0;j<relationshiptype.length;j++){
-                    String t= "";
-                    if(relationshiptype[j]==0){
-                        t="水管 ";
-                    } else if(relationshiptype[j]==1){
-                        t="电路 ";
-                    }else if(relationshiptype[j]==2){
-                        t="绿化 ";
-                    }else if(relationshiptype[j]==3){
-                        t="公共设施 ";
-                    }else{
-                        t="其他 ";
-                    }
-                    typeStr = typeStr + t;
-                }
-                partners[i].setDescription("合作类别：" + typeStr);
             }
             return partners;
         } else if( type == 2 ){
-            return partnerMapper.getAllPartner();
+            Integer amount = partnerMapper.getAllPartnerAmount();
+            partner[] partners = new partner[amount];
+            partners = partnerMapper.getAllPartner();
+            for(Integer k=0;k<amount;k++){
+                // 0-是合作 1-不是合作
+                if(relationshipMapper.getActiveByPartnerAndCompany(partners[k].getNum(), company)==1){
+                    partners[k].setIspartner(0);
+                }else{
+                    partners[k].setIspartner(1);
+                }
+            }
+            return partners;
         }else{
             partner[] partners = new partner[0];
             return partners;
@@ -115,25 +126,7 @@ public class PartnerService {
         partner = partnerMapper.getPartnerByNum(number);
         partnerDashboard.setLoginname(partner.getName());
         partnerDashboard.setLine1("维修公司：            " + partner.getName());
-        Integer[] relationshiptype = new Integer[5];
-        relationshiptype = relationshipMapper.getRelationshipTypeByPartner(number);
-        String type = "";
-        for(int i=0;i<relationshiptype.length;i++){
-            String t= "";
-            if(relationshiptype[i]==0){
-                t="水管 ";
-            } else if(relationshiptype[i]==1){
-                t="电路 ";
-            }else if(relationshiptype[i]==2){
-                t="绿化 ";
-            }else if(relationshiptype[i]==3){
-                t="公共设施 ";
-            }else{
-                t="其他 ";
-            }
-            type = type + t;
-        }
-        partnerDashboard.setLine2("负责类别：            " + type);
+        partnerDashboard.setLine2("负责类别：            " + (partner.getOne()==1?"水管":" ")+(partner.getTwo()==1?"电路":" ")+(partner.getThree()==1?"绿化":" ")+(partner.getFour()==1?"公共设施":" ")+(partner.getFive()==1?"其他":" "));
         
         partnerDashboard.setFixwaite_number(caseMapper.getFixwaite_numberCaseAmountByPartner(number));
         partnerDashboard.setFixassigned_number(caseMapper.getFixassigned_numberCaseAmountByPartner(number));

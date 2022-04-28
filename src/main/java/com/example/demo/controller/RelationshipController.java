@@ -14,25 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class RelationshipController {
     @Autowired
     RelationshipService relationshipService;
-    @PostMapping("/insertrelationship")
+    @PostMapping("/changerelationship")
     public Integer insertRelationship(
     @RequestParam(value = "company") String company,
-    @RequestParam(value = "partner") Integer partner,
-    @RequestParam(value = "type") Integer type){
-        return relationshipService.InsertRelationship(company, partner, type);
+    @RequestParam(value = "partner") Integer partner){
+        return relationshipService.changeRelationship(company, partner);
     } 
-
-    @PostMapping("/getrelationshipbycompany")
-    public Relationship[] getRelationshipByCompany(
-    @RequestParam(value = "company") String company){
-        return relationshipService.getRelationshipByCompany(company);
-    }
-    
-    @PostMapping("/getrelationshipbycompanytype")
-    public Relationship[] getRelationshipByCompanyType(
-        @RequestParam(value = "company") String company,
-        @RequestParam(value = "type") Integer type){
-        return relationshipService.getRelationshipByCompanyType(company, type);
-    }
-    
 }

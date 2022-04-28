@@ -47,8 +47,9 @@ public class PartnerController {
 
     @PostMapping("/getpartnerbynum")
     public partner getPartnerByNum(
-    @RequestParam(value = "num") Integer num){
-        return partnerService.getPartnerByNum(num);
+    @RequestParam(value = "num") Integer num,
+    @RequestParam(value = "company") String company){
+        return partnerService.getPartnerByNum(num,company);
     } 
 
      //type==1 company通过relationship查物业公司合作的维修公司们
