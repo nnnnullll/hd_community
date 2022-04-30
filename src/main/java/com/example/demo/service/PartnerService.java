@@ -34,7 +34,7 @@ public class PartnerService {
         }
     }
 
-    //type=1改信息 2-改密码 3-改active
+    //type=1改信息 2-改密码 3-改active 4-重置密码
     public Integer updatePartner( String num, String address, String phone, String email, String description, Integer one, Integer two, Integer three, Integer four, Integer five, Integer type, String password, String oldpassword,Integer active){
         if(type==1){
             if(partnerMapper.getPartnerAmountByPhone(phone)>=2){
@@ -62,7 +62,7 @@ public class PartnerService {
             }else{
                 return 0;
             }
-        }else{
+        }else if(type==3){
             partner partner = new partner();
             partner.setNum(Integer.valueOf(num));;
             partner.setActive(active);
@@ -71,7 +71,8 @@ public class PartnerService {
             }else{
                 return 0;
             }
-           
+        }else{
+            return partnerMapper.updatePartnerResetPassword(Integer.valueOf(num));
         }
         
     }

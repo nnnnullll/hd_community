@@ -23,6 +23,8 @@ public interface PartnerMapper {
     Integer updatePartner(@Param("partner") partner partner);
     @Update("update `partner` set  `partner`.password = #{partner.password} where `partner`.num = #{partner.num}")
     Integer updatePartnerPassword(@Param("partner") partner partner);
+    @Update("update `partner` set  `partner`.password = '123456' where `partner`.num = #{partner.num}")
+    Integer updatePartnerResetPassword(Integer num);
     @Update("update `partner` set  `partner`.active = #{partner.active} where `partner`.num = #{partner.num}")
     Integer updatePartnerActive(@Param("partner") partner partner);
 
