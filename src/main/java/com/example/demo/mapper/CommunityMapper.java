@@ -1,11 +1,14 @@
 package com.example.demo.mapper;
 
 import com.example.demo.enity.Community;
+import com.example.demo.enity.option;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -37,4 +40,11 @@ public interface CommunityMapper {
     Integer updateCommunityRemoveCompanyByNumber(Integer number);
     @Update("update `community` set `community`.active=0,`community`.company=#{company} where `community`.number=#{number};")
     Integer updateCommunityAddCompanyByNumber(String company,Integer number);
+
+    @Results(value = {
+        @Result(id = true, property = "value", column = "number"),
+        @Result(property = "label", column = "name")
+    })
+    @Select("SELECT `community`.number,`community`.name FROM `community` WHERE `community`.active=0 and `community`.company=#{company}")
+    option[] getCommunityOption(String company);
 }

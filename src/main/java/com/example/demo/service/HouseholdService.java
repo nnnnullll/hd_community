@@ -22,16 +22,18 @@ public class HouseholdService {
         return householdMapper.insertHousehold(community, building, room_number, password);
     } 
 
-    // type=1 更新个人信息 type=2 修改密码
+    // type=1 更新个人信息 type=2 修改密码 type=3 重置密码
     public Integer updateHousehold(Integer number, String email, String phone,  Integer type, String password, String oldpassword){
         if(type==1){
             return householdMapper.updateHousehold(number, email, phone);
-        }else{
+        }else if(type==2){
             if(householdMapper.validateHouseholdByPassword(number, oldpassword)==1){
                 return householdMapper.updateHouseholdPassword(number, password);
             }else{
                 return 0;
             }
+        }else{
+            return householdMapper.updateHouseholdResetPassword(number);
         }
         
     } 

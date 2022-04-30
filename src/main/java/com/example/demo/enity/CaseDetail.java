@@ -24,7 +24,15 @@ public class CaseDetail {
     String updated;
     Activity[] activities;
     option[] options_fix;
+    option[] options_agent;
     
+    
+    public option[] getOptions_agent() {
+        return options_agent;
+    }
+    public void setOptions_agent(option[] options_agent) {
+        this.options_agent = options_agent;
+    }
     public option[] getOptions_fix() {
         return options_fix;
     }

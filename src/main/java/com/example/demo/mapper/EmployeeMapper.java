@@ -1,11 +1,14 @@
 package com.example.demo.mapper;
 
 import com.example.demo.enity.Employee;
+import com.example.demo.enity.option;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -28,6 +31,8 @@ public interface EmployeeMapper {
     Integer updateEmployeeAdmin(Integer number);
     @Update("update `employee` set `employee`.password = #{password} where `employee`.number = #{number};")
     Integer updateEmployeePassword(Integer number,String password);
+    @Update("update `employee` set `employee`.password = '123456' where `employee`.number = #{number};")
+    Integer updateEmployeeResetPassword(Integer number);
     
     //核实是否已存在-身份证
     @Select("SELECT count(*) FROM `employee` where `employee`.id=#{id} and `employee`.company=#{company}")
@@ -62,5 +67,12 @@ public interface EmployeeMapper {
     //查employee 通过company(多条记录)
     @Select("SELECT * FROM `employee` where `employee`.company=#{company}")
     Employee[] getEmployeeByCompany(String company);
+
+    @Results(value = {
+        @Result(id = true, property = "value", column = "number"),
+        @Result(property = "label", column = "name")
+    })
+    @Select("SELECT `employee`.number,`employee`.name FROM `employee` WHERE `employee`.active=0 and `employee`.company=#{company}")
+    option[] getAgentOption(String company);
 }
  

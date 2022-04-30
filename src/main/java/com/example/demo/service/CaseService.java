@@ -23,15 +23,18 @@ public class CaseService {
     ActivityMapper activityMapper;
 
     //插入case
-    public Integer insertCase(String subject,String description,Integer type,Integer created_role,Integer created_by){
+    public Integer insertCase(String subject,String description,Integer type,Integer created_role,Integer created_by, Integer householdnumber){
         //1-employee  2-Household 
         Case newcase = new Case();
         if(created_role == 1){
             Employee employee = new Employee();
             employee = employeeMapper.getEmployeeByNumber(created_by);
             newcase.setCompany(employee.getCompany());
-            // newcase.setCommunity(community);
-            // newcase.setHousehold(household);
+            Household household1 = new Household();
+            household1 = householdMapper.getHouseholdByNumber(householdnumber);
+            newcase.setCommunity(household1.getCommunity());
+            newcase.setCompany(communityMapper.getCommunityByNumber(household1.getCommunity()).getCompany());
+            newcase.setHousehold(household1.getNumber());
         }else{
             Household household = new Household();
             household = householdMapper.getHouseholdByNumber(created_by);
@@ -47,7 +50,13 @@ public class CaseService {
         caseMapper.insertCase(newcase);
         return newcase.getNumber();
     } 
-    
+
+    public option[] getCommunityOption(String company){
+        return communityMapper.getCommunityOption(company);
+    }  
+    public option[] getHouseholdOption(Integer community){
+        return householdMapper.getHouseholdOption(community);
+    }    
     // 查casedetail 通过case number
     public CaseDetail getCaseByNumber(Integer number,Integer usertype){
         Case casetemp = new Case();
@@ -66,8 +75,9 @@ public class CaseService {
         kValuehousehold.setNumber(casetemp.getHousehold());
         Integer buildInteger = householdMapper.getHouseholdByNumber(casetemp.getHousehold()).getBuilding();
         String RoomInteger = householdMapper.getHouseholdByNumber(casetemp.getHousehold()).getRoom_number();
-        kValuehousehold.setName(buildInteger +'楼'+ RoomInteger + '室' );
+        kValuehousehold.setName(Integer.toString(buildInteger) +"楼"+ RoomInteger + "室" );
         caseDetail.setHousehold(kValuehousehold);
+
         caseDetail.setSubject(casetemp.getSubject());//subject
         caseDetail.setDescription(casetemp.getDescription());//description
         caseDetail.setType(casetemp.getType());//type
@@ -107,6 +117,7 @@ public class CaseService {
             }else if(casetemp.getType()==5){
                 caseDetail.setOptions_fix(partnerMapper.getFixFiveOption(casetemp.getCompany()));
             }
+            caseDetail.setOptions_agent(employeeMapper.getAgentOption(casetemp.getCompany()));
         }
         return caseDetail;
     }

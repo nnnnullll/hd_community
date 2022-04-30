@@ -34,7 +34,7 @@ public class EmployeeService {
         }
     }
 
-    // type=1 更新个人信息  type=2 active/inactive复职离职 type=3 admin给予权限/授予权限 type=4 更改密码
+    // type=1 更新个人信息  type=2 active/inactive复职离职 type=3 admin给予权限/授予权限 type=4 更改密码 type=5 重置密码
     public Integer updateEmployee(Integer number,String phone,String email, Integer type, String password, String oldpassword){
         Employee employeet = new Employee();
         employeet = employeeMapper.getEmployeeByNumber(number);
@@ -62,12 +62,14 @@ public class EmployeeService {
             }else{
                 return employeeMapper.updateEmployeeInAdmin(number);
             }
-        }else{
+        }else if(type==4){
             if(employeeMapper.validateEmployeeByPassword(number, oldpassword)==1){
                 return employeeMapper.updateEmployeePassword(number,password);
             }else{
                 return 0;
             }
+        }else{
+            return employeeMapper.updateEmployeeResetPassword(number);
         }   
     }
     
