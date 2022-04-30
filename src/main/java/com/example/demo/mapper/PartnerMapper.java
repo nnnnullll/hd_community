@@ -1,11 +1,14 @@
 package com.example.demo.mapper;
 
+import com.example.demo.enity.option;
 import com.example.demo.enity.partner;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -47,6 +50,37 @@ public interface PartnerMapper {
      //login 核实Partner 通过number & password
     @Select("SELECT count(*) FROM `partner` where `partner`.num=#{username} and `partner`.password=#{password}")
     Integer validatePartnerByPassword(Integer username, String password);
- 
+    
+    //get option_fix 
+    @Results(value = {
+        @Result(id = true, property = "value", column = "num"),
+        @Result(property = "label", column = "name")
+    })
+    @Select("SELECT `partner`.num,`partner`.`name` FROM `partner` WHERE `partner`.active=0 and `partner`.one=1 AND `partner`.num in (SELECT `relationship`.partner FROM `relationship` where `relationship`.active=0 and `relationship`.company=#{company})")
+    option[] getFixOneOption(String company);
+    @Results(value = {
+        @Result(id = true, property = "value", column = "num"),
+        @Result(property = "label", column = "name")
+    })
+    @Select("SELECT `partner`.num,`partner`.`name` FROM `partner` WHERE `partner`.active=0 and `partner`.two=1 AND `partner`.num in (SELECT `relationship`.partner FROM `relationship` where `relationship`.active=0 and `relationship`.company=#{company})")
+    option[] getFixTwoOption(String company);
+    @Results(value = {
+        @Result(id = true, property = "value", column = "num"),
+        @Result(property = "label", column = "name")
+    })
+    @Select("SELECT `partner`.num,`partner`.`name` FROM `partner` WHERE `partner`.active=0 and `partner`.three=1 AND `partner`.num in (SELECT `relationship`.partner FROM `relationship` where `relationship`.active=0 and `relationship`.company=#{company})")
+    option[] getFixThreeOption(String company);
+    @Results(value = {
+        @Result(id = true, property = "value", column = "num"),
+        @Result(property = "label", column = "name")
+    })
+    @Select("SELECT `partner`.num,`partner`.`name` FROM `partner` WHERE `partner`.active=0 and `partner`.four=1 AND `partner`.num in (SELECT `relationship`.partner FROM `relationship` where `relationship`.active=0 and `relationship`.company=#{company})")
+    option[] getFixFourOption(String company);
+    @Results(value = {
+        @Result(id = true, property = "value", column = "num"),
+        @Result(property = "label", column = "name")
+    })
+    @Select("SELECT `partner`.num,`partner`.`name` FROM `partner` WHERE `partner`.active=0 and `partner`.five=1 AND `partner`.num in (SELECT `relationship`.partner FROM `relationship` where `relationship`.active=0 and `relationship`.company=#{company})")
+    option[] getFixFiveOption(String company);
 }
  

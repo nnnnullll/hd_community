@@ -82,8 +82,8 @@ public interface CaseMapper {
 
 
     //查new case amount 通过 CompanyNumber
-    @Select("SELECT count(*) FROM `case` where  `case`.company=#{number} and `case`.state=0;")
-    Integer getNewCaseAmountByCompanyNumber(String number);
+    @Select("SELECT count(*) FROM `case` where  `case`.company=#{company} and `case`.state=0;")
+    Integer getNewCaseAmountByCompanyNumber(String company);
     //查In progress case amount 通过 CompanyNumber
     @Select("SELECT count(*) FROM `case` where `case`.company=#{number} and `case`.state=1;")
     Integer getInProgressCaseAmountByCompanyNumber(String number);
@@ -140,6 +140,9 @@ public interface CaseMapper {
     //查Resolved case amount 通过 household
     @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state=4;")
     Integer getResoledCaseAmountByHousehold(Integer number);
+    //查Resolved case amount 通过 household
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state=5;")
+    Integer getClosedCaseAmountByHousehold(Integer number);
     //查Escalation case amount 通过 household
     @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.escalation=1;")
     Integer getEscalationCaseAmountByHousehold(Integer number);

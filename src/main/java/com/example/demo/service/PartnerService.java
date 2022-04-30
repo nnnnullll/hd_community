@@ -55,7 +55,6 @@ public class PartnerService {
             }
         }else if(type==2){
             if(partnerMapper.validatePartnerByPassword(Integer.valueOf(num), oldpassword)==1){
-                System.out.println(Integer.valueOf(num));
                 partner partner = new partner();
                 partner.setNum(Integer.valueOf(num));;
                 partner.setPassword(password);
@@ -134,7 +133,6 @@ public class PartnerService {
         partnerDashboard.setFixfinish_number(caseMapper.getFixfinish_numberCaseAmountByPartner(number));
         partnerDashboard.setFixclose_number(caseMapper.getFixclose_numberCaseAmountByPartner(number));
         
-        Integer partnerNumber = partner.getNum();
         String partnerName = partner.getName();
         partnerDashboard.setStateChartTitle(partnerName+"当前投诉单状态");
         Integer[] stateamount = new Integer[5];
@@ -149,11 +147,16 @@ public class PartnerService {
 
         partnerDashboard.setTypeChartTitle(partnerName+"历史投诉单种类");
         Integer[] typeamount = new Integer[5];
-        typeamount[0] = caseMapper.getT1CaseAmountByPartner(partnerNumber);
-        typeamount[1] = caseMapper.getT2CaseAmountByPartner(partnerNumber);
-        typeamount[2] = caseMapper.getT3CaseAmountByPartner(partnerNumber);
-        typeamount[3] = caseMapper.getT4CaseAmountByPartner(partnerNumber);
-        typeamount[4] = caseMapper.getT5CaseAmountByPartner(partnerNumber);
+        typeamount[0] = caseMapper.getT1CaseAmountByPartner(number);
+        typeamount[1] = caseMapper.getT2CaseAmountByPartner(number);
+        typeamount[2] = caseMapper.getT3CaseAmountByPartner(number);
+        typeamount[3] = caseMapper.getT4CaseAmountByPartner(number);
+        typeamount[4] = caseMapper.getT5CaseAmountByPartner(number);
+        System.out.println(typeamount[0]);
+        System.out.println(typeamount[1]);
+        System.out.println(typeamount[2]);
+        System.out.println(typeamount[3]);
+        System.out.println(typeamount[4]);
         partnerDashboard.setTypechart(typeamount);
         String[] typeChartLabels = new String[] {"水管", "电路", "绿化", "公共设施", "其他"};
         partnerDashboard.setTypeChartLabels(typeChartLabels);

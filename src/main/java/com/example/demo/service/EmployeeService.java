@@ -101,8 +101,9 @@ public class EmployeeService {
         employedashboard.setIfadmin(employee.getAdmin());
 
         employedashboard.setNewnumber(caseMapper.getNewCaseAmountByCompanyNumber(companyNumber));
-        Integer inprogressnumber = caseMapper.getInProgressCaseAmountByAssignedTo(number) + caseMapper.getInFixCaseAmountByAssignedTo(number);
+        Integer inprogressnumber = caseMapper.getInProgressCaseAmountByAssignedTo(number);
         employedashboard.setInprogressnumber(inprogressnumber);
+        employedashboard.setInfixnumber(caseMapper.getInFixCaseAmountByAssignedTo(number));
         employedashboard.setEscalationnumber(caseMapper.getEscalationCaseAmountByAssignedTo(number));
         employedashboard.setEmergencynumber(caseMapper.getEmergencyCaseAmountByAssignedTo(number));
         employedashboard.setResolvednumber(caseMapper.getResoledCaseAmountByAssignedTo(number));

@@ -1,5 +1,6 @@
 package com.example.demo.enity;
 
+
 public class CaseDetail {
     Integer number;
     KeyValueString company;
@@ -22,7 +23,14 @@ public class CaseDetail {
     Integer updated_by;
     String updated;
     Activity[] activities;
+    option[] options_fix;
     
+    public option[] getOptions_fix() {
+        return options_fix;
+    }
+    public void setOptions_fix(option[] options_fix) {
+        this.options_fix = options_fix;
+    }
     public Activity[] getActivities() {
         return activities;
     }

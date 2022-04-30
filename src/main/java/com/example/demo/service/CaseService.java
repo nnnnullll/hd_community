@@ -49,7 +49,7 @@ public class CaseService {
     } 
     
     // 查casedetail 通过case number
-    public CaseDetail getCaseByNumber(Integer number){
+    public CaseDetail getCaseByNumber(Integer number,Integer usertype){
         Case casetemp = new Case();
         casetemp = caseMapper.getCaseByNumber(number);
         CaseDetail caseDetail = new CaseDetail();
@@ -95,6 +95,19 @@ public class CaseService {
         Activity[] activities = new Activity[activityMapper.getActivityAmountByCase_number(number)];
         activities = activityMapper.getActivityByCase_number(number);
         caseDetail.setActivities(activities);
+        if(usertype==1){
+            if(casetemp.getType()==1){
+                caseDetail.setOptions_fix(partnerMapper.getFixOneOption(casetemp.getCompany()));
+            }else if(casetemp.getType()==2){
+                caseDetail.setOptions_fix(partnerMapper.getFixTwoOption(casetemp.getCompany()));
+            }else if(casetemp.getType()==3){
+                caseDetail.setOptions_fix(partnerMapper.getFixThreeOption(casetemp.getCompany()));
+            }else if(casetemp.getType()==4){
+                caseDetail.setOptions_fix(partnerMapper.getFixFourOption(casetemp.getCompany()));
+            }else if(casetemp.getType()==5){
+                caseDetail.setOptions_fix(partnerMapper.getFixFiveOption(casetemp.getCompany()));
+            }
+        }
         return caseDetail;
     }
     
@@ -152,7 +165,7 @@ public class CaseService {
                 if(caseMapper.updateCaseFromInProgreeToInFix(number, assigned_to)==1){
                     partner partner = new partner();
                     partner = partnerMapper.getPartnerByNum(assigned_to);
-                    if(casetemp.getFix_state()==0){
+                    if(casetemp.getFix_state()==null){
                         return activityMapper.insertActivity(number, "状态：维修中 ← 受理中；维修状态：已分配 ← 空；维修方：" + partner.getName() , employee.getName(), 1 , employee.getNumber());
                     }else if(casetemp.getFix_state()==1){
                         return activityMapper.insertActivity(number, "维修状态：已分配 ← 待分配；维修方：" + partner.getName() , employee.getName(), 1 , employee.getNumber());
@@ -232,7 +245,7 @@ public class CaseService {
                 // 待补充 状态：受理中 ← 待补充 ；留言：xxxx
                 if(casetemp.getState()==2){    
                     if(caseMapper.updateCaseToInProgree(number)==1){
-                        return activityMapper.insertActivity(number, "状态：受理中 ← 待补充; 留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                        return activityMapper.insertActivity(number, "状态：受理中 ← 待补充; 留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 2, household.getNumber());
                     }else{
                         return 0;
                     }
@@ -240,23 +253,23 @@ public class CaseService {
                 //  状态：受理中 ← 已解决 ；留言：xxxx
                 else if(casetemp.getState()== 4){    
                     if(caseMapper.updateCaseToInProgree(number)==1){
-                        return activityMapper.insertActivity(number, "状态：受理中 ← 已解决; 留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                        return activityMapper.insertActivity(number, "状态：受理中 ← 已解决; 留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 2, household.getNumber());
                     }else{
                         return 0;
                     }
                 // 留言
                 }else{
-                    return activityMapper.insertActivity(number, "留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
+                    return activityMapper.insertActivity(number, "留言: " + message, household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 2, household.getNumber());
                 }
             }else if(type == 11){
-                if(caseMapper.getFixStateByNumber(number)==0){
+                if(caseMapper.getFixStateByNumber(number) == null){
                     if(caseMapper.updateCaseFromClosed(number)==1){
                         return activityMapper.insertActivity(number, "住户关闭该投诉单", household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
                     }else{
                         return 0;
                     }
                 }else{
-                    if(caseMapper.updateCaseFromClosedAndFixClosed(number)==0){
+                    if(caseMapper.updateCaseFromClosedAndFixClosed(number)==1){
                         return activityMapper.insertActivity(number, "住户关闭该投诉单", household.getBuilding()+"楼"+household.getRoom_number()+"室住户", 3, household.getNumber());
                     }else{
                         return 0;

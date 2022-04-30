@@ -26,8 +26,9 @@ public class CaseController {
     // 查case 通过case number
     @PostMapping("/getcasebynumber")
     public CaseDetail getCaseByNumber(
-        @RequestParam(value = "number") Integer number) {
-        return caseService.getCaseByNumber(number);
+        @RequestParam(value = "number") Integer number,
+        @RequestParam(value = "usertype") Integer type) {
+        return caseService.getCaseByNumber(number,type);
     }
 
     // 更新case 通过case number

@@ -57,11 +57,8 @@ public class CommunityService {
         if(type==1){
             if(communityMapper.validateActiveCommunityCompanyByNumber(number, company)==1){
                 communityMapper.updateCommunityRemoveCompanyByNumber(number);
-                
                 return 1;
             }else{
-                System.out.println(company);
-                System.out.println(communityMapper.getCommunityByNumber(number).getCompany());
                 return 0;//company不符
             }
         }else if(type==2){

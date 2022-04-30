@@ -66,16 +66,18 @@ public class HouseholdService {
         householdDashboard.setLine1("所属社区：            " + community.getName());
         Company company = new Company();
         company = companyMapper.getCompanyByNumber(community.getCompany());
-        System.out.println(company.getNumber());
         householdDashboard.setCompanynumber(company.getNumber()); 
         householdDashboard.setLine2("所属物业：            " + company.getName());
         
         householdDashboard.setNewnumber(caseMapper.getNewCaseAmountByHousehold(number));
-        Integer inprogressnumber = caseMapper.getInProgressCaseAmountByHousehold(number) + caseMapper.getInFixCaseAmountByHousehold(number);
+        Integer inprogressnumber = caseMapper.getInProgressCaseAmountByHousehold(number);
         householdDashboard.setInprogressnumber(inprogressnumber);
         householdDashboard.setEscalationnumber(caseMapper.getEscalationCaseAmountByHousehold(number));
         householdDashboard.setEmergencynumber(caseMapper.getEmergencyCaseAmountByHousehold(number));
         householdDashboard.setResolvednumber(caseMapper.getResoledCaseAmountByHousehold(number));
+        householdDashboard.setClosednumber(caseMapper.getClosedCaseAmountByHousehold(number));
+        householdDashboard.setAwaitnumber(caseMapper.getAwaitingInfoCaseAmountByHousehold(number));
+        householdDashboard.setInfixnumber(caseMapper.getInFixCaseAmountByHousehold(number));
         
         Integer communityNumber = community.getNumber();
         String companyName = community.getName();

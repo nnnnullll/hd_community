@@ -10,11 +10,14 @@ public class LoginDashboard {
     Integer ifadmin;
 
     //employee household
-    Integer newnumber;
-    Integer inprogressnumber;
-    Integer escalationnumber;
-    Integer emergencynumber;
-    Integer resolvednumber;
+    Integer newnumber;//e h
+    Integer awaitnumber;//h
+    Integer inprogressnumber;//e h
+    Integer infixnumber;//e h
+    Integer resolvednumber;//e h
+    Integer closednumber;//h
+    Integer escalationnumber;//e
+    Integer emergencynumber;//e
 
     //partner
     Integer fixwaite_number;
@@ -32,6 +35,24 @@ public class LoginDashboard {
     String[] typeChartLabels;
 
     
+    public Integer getInfixnumber() {
+        return infixnumber;
+    }
+    public void setInfixnumber(Integer infixnumber) {
+        this.infixnumber = infixnumber;
+    }
+    public Integer getClosednumber() {
+        return closednumber;
+    }
+    public void setClosednumber(Integer closednumber) {
+        this.closednumber = closednumber;
+    }
+    public Integer getAwaitnumber() {
+        return awaitnumber;
+    }
+    public void setAwaitnumber(Integer awaitnumber) {
+        this.awaitnumber = awaitnumber;
+    }
     public Integer getPartnernumber() {
         return partnernumber;
     }
