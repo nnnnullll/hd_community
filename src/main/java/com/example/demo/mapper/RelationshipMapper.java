@@ -1,7 +1,5 @@
 package com.example.demo.mapper;
 
-import com.example.demo.enity.Relationship;
-
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

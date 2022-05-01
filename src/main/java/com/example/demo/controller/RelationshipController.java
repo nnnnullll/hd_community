@@ -1,6 +1,4 @@
 package com.example.demo.controller;
-
-import com.example.demo.enity.Relationship;
 import com.example.demo.service.RelationshipService;
 
 import org.springframework.beans.factory.annotation.Autowired;
