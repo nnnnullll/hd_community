@@ -36,11 +36,11 @@ public interface PartnerMapper {
     //查partner 通过number(唯一一条记录)
     @Select("SELECT active FROM `partner` where `partner`.num=#{num} and `partner`.active=#{num}")
     Integer getPartnerActiveByNum(Integer num);
-    //查partner 所有
-    @Select("SELECT * FROM `partner`")
-    partner[] getAllPartner();
-    @Select("SELECT count(*) FROM `partner`")
-    Integer getAllPartnerAmount();
+    //查非合作的partner
+    @Select("SELECT * FROM `partner` where `partner`.num not in  (SELECT `relationship`.partner FROM `relationship` where `relationship`.company=#{number})")
+    partner[] getNonePartner(String number);
+    @Select("SELECT count(*) FROM `partner` where `partner`.num not in  (SELECT `relationship`.partner FROM `relationship` where `relationship`.company=#{number})")
+    Integer getNonePartnerAmount(String number);
     //查partner 通过number(唯一一条记录)
     @Select("SELECT count(*) FROM `partner` where `partner`.phone=#{phone}")
     Integer getPartnerAmountByPhone(String phone);

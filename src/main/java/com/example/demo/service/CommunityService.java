@@ -16,7 +16,8 @@ public class CommunityService {
     CommunityMapper communityMapper;
     @Autowired
     HouseholdMapper householdMapper;
-
+    @Autowired
+    CaseMapper caseMapper;
     public Integer insertCommunity(String name,String region,String address,String company,String buildings,String rooms){
 
         Community community = new Community();
@@ -56,8 +57,12 @@ public class CommunityService {
     public Integer updateCommunity(Integer type,Integer number,String company){
         if(type==1){
             if(communityMapper.validateActiveCommunityCompanyByNumber(number, company)==1){
-                communityMapper.updateCommunityRemoveCompanyByNumber(number);
-                return 1;
+                if(caseMapper.getCaseAmountByCommunity(number)==0){
+                    communityMapper.updateCommunityRemoveCompanyByNumber(number);
+                    return 1;
+                }else{
+                    return 2;
+                }
             }else{
                 return 0;//company不符
             }

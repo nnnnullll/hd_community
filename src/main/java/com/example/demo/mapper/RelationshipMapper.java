@@ -26,14 +26,14 @@ public interface RelationshipMapper {
     Integer updateInActiveByPartner(@Param("partner") Integer partner);
  
 
-    //查CompanyAmount 通过partner
-    @Select("SELECT count(distinct company) FROM `relationship` where `relationship`.partner=#{partner}")
-    Integer getCompanyAmountFromRelationshipByPartner(@Param("partner") Integer partner);
-    //查CompanyNumber 通过partner
-    @Select("SELECT distinct company FROM `relationship` where `relationship`.partner=#{partner}")
-    String[] getCompanyNumberFromRelationshipByPartner(@Param("partner") Integer partner);
+    // partner看合作的物业公司
+    @Select("SELECT count(distinct company) FROM `relationship` where `relationship`.partner=#{partner} and `relationship`.active=0")
+    Integer getActiveCompanyAmountFromRelationshipByPartner(@Param("partner") Integer partner);
+    @Select("SELECT distinct company FROM `relationship` where `relationship`.partner=#{partner}  and `relationship`.active=0")
+    String[] getActiveCompanyNumberFromRelationshipByPartner(@Param("partner") Integer partner);
 
-    //查PartnerNumber 通过company
+
+    //company看合作的维修公司
     @Select("SELECT distinct partner FROM `relationship` where `relationship`.company=#{company}")
     Integer[] getPartnerNumberFromRelationshipByCompany(@Param("company") String company);
     //查PartnerAmount 通过company

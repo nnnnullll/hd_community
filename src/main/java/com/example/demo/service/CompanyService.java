@@ -38,17 +38,16 @@ public class CompanyService {
             companies[0] = companyMapper.getCompanyByNumber(number); 
             return companies;
         }else if(type == 2 ){
-            Integer amount = relationshipMapper.getCompanyAmountFromRelationshipByPartner(partner);
+            Integer amount = relationshipMapper.getActiveCompanyAmountFromRelationshipByPartner(partner);
             String[] companiesnumber =new String[amount];
-            companiesnumber = relationshipMapper.getCompanyNumberFromRelationshipByPartner(partner);
+            companiesnumber = relationshipMapper.getActiveCompanyNumberFromRelationshipByPartner(partner);
             Company[] companies = new Company[amount];
             for(Integer i=0;i<amount;i++){
                 companies[i]=companyMapper.getCompanyByNumber(companiesnumber[i]);
             }
             return companies;
         }else{
-            Company[] companies = new Company[0];
-            return companies;
+            return companyMapper.getNotPartnerCompany(partner);
         }
         
     }

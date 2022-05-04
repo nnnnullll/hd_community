@@ -21,4 +21,7 @@ public interface CompanyMapper {
     //查cmmpany 通过number(唯一一条记录)
     @Select("SELECT * FROM `company` where `company`.number=#{number} and `company`.active=0")
     Company getCompanyByNumber(String integer);
+    //查cmmpany 通过number(唯一一条记录)
+    @Select("SELECT * FROM `company` where `company`.number not in  (SELECT `relationship`.company FROM `relationship` where `relationship`.partner=#{number} and `relationship`.active=0)")
+    Company[] getNotPartnerCompany(Integer number);
 } 

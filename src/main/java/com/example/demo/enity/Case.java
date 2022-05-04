@@ -21,7 +21,36 @@ public class Case {
     Integer updated_role;
     Integer updated_by;
     String updated;
+    String community_n;
+    String assigned_to_n;
+    String fix_assigned_to_n;
+    String company_n;
 
+    
+    public String getCompany_n() {
+        return company_n;
+    }
+    public void setCompany_n(String company_n) {
+        this.company_n = company_n;
+    }
+    public String getCommunity_n() {
+        return community_n;
+    }
+    public void setCommunity_n(String community_n) {
+        this.community_n = community_n;
+    }
+    public String getAssigned_to_n() {
+        return assigned_to_n;
+    }
+    public void setAssigned_to_n(String assigned_to_n) {
+        this.assigned_to_n = assigned_to_n;
+    }
+    public String getFix_assigned_to_n() {
+        return fix_assigned_to_n;
+    }
+    public void setFix_assigned_to_n(String fix_assigned_to_n) {
+        this.fix_assigned_to_n = fix_assigned_to_n;
+    }
     public Integer getNumber() {
         return number;
     }

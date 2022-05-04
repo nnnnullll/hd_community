@@ -102,9 +102,9 @@ public class PartnerService {
             }
             return partners;
         } else if( type == 2 ){
-            Integer amount = partnerMapper.getAllPartnerAmount();
+            Integer amount = partnerMapper.getNonePartnerAmount(company);
             partner[] partners = new partner[amount];
-            partners = partnerMapper.getAllPartner();
+            partners = partnerMapper.getNonePartner(company);
             for(Integer k=0;k<amount;k++){
                 // 0-是合作 1-不是合作
                 if(relationshipMapper.getActiveByPartnerAndCompany(partners[k].getNum(), company)==1){
@@ -133,6 +133,8 @@ public class PartnerService {
         partnerDashboard.setInfix_number(caseMapper.getInfix_numberCaseAmountByPartner(number));
         partnerDashboard.setFixfinish_number(caseMapper.getFixfinish_numberCaseAmountByPartner(number));
         partnerDashboard.setFixclose_number(caseMapper.getFixclose_numberCaseAmountByPartner(number));
+        partnerDashboard.setEmergencynumber(caseMapper.getFixEmergency_numberCaseAmountByPartner(number));
+        partnerDashboard.setEscalationnumber(caseMapper.getFixEscalation_numberCaseAmountByPartner(number));
         
         String partnerName = partner.getName();
         partnerDashboard.setStateChartTitle(partnerName+"当前投诉单状态");

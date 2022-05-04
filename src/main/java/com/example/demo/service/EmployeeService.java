@@ -53,8 +53,11 @@ public class EmployeeService {
         }else if( type==2 ){
             if(employeeMapper.getEmployeeActiveByNumber(number)==1){
                 return employeeMapper.updateEmployeeActive(number);
-            }else{
-                return employeeMapper.updateEmployeeInActive(number);
+            }else{ //离职
+                if(caseMapper.getCaseAmountByEmployee(number)==0)//名下无处理中case
+                    return employeeMapper.updateEmployeeInActive(number);
+                else
+                    return 0;    
             }
         }else if(type==3){
             if(employeeMapper.getEmployeeAdminByNumber(number)==0){

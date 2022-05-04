@@ -16,19 +16,50 @@ public interface CaseMapper {
     // 查case 通过case number
     @Select("SELECT * FROM `case` where `case`.number=#{number}")
     Case getCaseByNumber(Integer number);
-//caselist    
-    //查caselist(状态不是关闭的) 通过household number
-    @Select("SELECT * FROM `case` where `case`.household=#{number} order by number asc;")
+
+//caselist 处理中（非close）  
+    @Select("SELECT * FROM `case` where `case`.household=#{number} and `case`.state!=5 order by number asc;")
     Case[] getCaseByHouseholdNumber(Integer number);
-    //查caselist(状态不是关闭的) 通过employee number
-    @Select("SELECT * FROM `case` where `case`.assigned_to=#{number} order by number asc;")
+    @Select("SELECT * FROM `case` where `case`.assigned_to=#{number} and `case`.state!=5 order by number asc;")
     Case[] getCaseByEmployeeNumber(Integer number);
-    //查ALL caselist(状态不是关闭的) 通过company number
+    @Select("SELECT * FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state!=5 order by number asc;")
+    Case[] getCaseByPartnerNumber(Integer number);
+
+// 解除合作时的验证
+    @Select("SELECT count(*) FROM `case` where `case`.community=#{community} and `case`.state!=5;")
+    Integer getCaseAmountByCommunity(Integer number);
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state!=5;")
+    Integer getCaseAmountByEmployee(Integer number);
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.company=#{company} and `case`.state!=5;")
+    Integer getCaseAmountByPartner(Integer number,String comoany);
+
+//查ALL caselist 通过company number
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number} order by number asc;")
+    Integer getCaseAmountByCompanyNumber(String number);
     @Select("SELECT * FROM `case` where `case`.company=#{number} order by number asc;")
     Case[] getCaseByCompanyNumber(String number);
-    //查caselist(状态不是关闭的) 通过partner number
-    @Select("SELECT * FROM `case` where `case`.fix_assigned_to=#{number} order by number asc;")
-    Case[] getCaseByPartnerNumber(Integer number);
+// New case    
+    @Select("SELECT * FROM `case` where `case`.company=#{number}  and `case`.state=0 order by number asc;")
+    Case[] getNewCaseByCompanyNumber(String number);
+
+// 加急与逾期    
+    @Select("SELECT * FROM `case` where `case`.company=#{number} and `case`.emergency=1 or `case`.escalation=1 order by number asc;")
+    Case[] getEmergencyAndEscalationCaseByCompanyNumber(String number);
+
+// 获取close case的列表
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state=5 ;")
+    Integer getCloseCaseAmountByHouseholdNumber(Integer number);
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state=5 ;")
+    Integer getCloseCaseAmountByEmployeeNumber(Integer number);
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=5 ;")
+    Integer getCloseCaseAmountByPartnerNumber(Integer number);
+    @Select("SELECT * FROM `case` where `case`.household=#{number} and `case`.state=5 order by number asc;")
+    Case[] getCloseCaseByHouseholdNumber(Integer number);
+    @Select("SELECT * FROM `case` where `case`.assigned_to=#{number} and `case`.state=5 order by number asc;")
+    Case[] getCloseCaseByEmployeeNumber(Integer number);
+    @Select("SELECT * FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=5 order by number asc;")
+    Case[] getCloseCaseByPartnerNumber(Integer number);
+
 //case update
     @Update("update `case` set `case`.state=1,`case`.assigned_to=#{assigned_to} where `case`.number=#{number};")
     Integer updateCaseFromNewToInProgree(Integer number,Integer assigned_to);
@@ -209,6 +240,10 @@ public interface CaseMapper {
     //查Resolved case amount 通过 household
     @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=5;")
     Integer getFixclose_numberCaseAmountByPartner(Integer number);
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.emergency=1;")
+    Integer getFixEmergency_numberCaseAmountByPartner(Integer number);
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.escalation=1;")
+    Integer getFixEscalation_numberCaseAmountByPartner(Integer number);
 
      //查type1 case amount 通过 partner
      @Select("SELECT count(*) FROM `case` where  `case`.fix_assigned_to=#{number} and `case`.type=1;")
