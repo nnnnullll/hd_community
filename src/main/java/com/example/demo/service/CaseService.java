@@ -100,8 +100,6 @@ public class CaseService {
         caseDetail.setCreated(casetemp.getCreated());//created
         caseDetail.setCreated_by(casetemp.getCreated_by());//crated_by
         caseDetail.setUpdated(casetemp.getUpdated());//updated
-        caseDetail.setUpdated_by(casetemp.getUpdated_by());//updated_by
-        caseDetail.setUpdated_role(casetemp.getUpdated_role());//updated_role
         Activity[] activities = new Activity[activityMapper.getActivityAmountByCase_number(number)];
         activities = activityMapper.getActivityByCase_number(number);
         caseDetail.setActivities(activities);
@@ -290,7 +288,7 @@ public class CaseService {
             //  维修结束 维修状态：已解决 ← 维修中
             else if(type==7){
                 if(caseMapper.updateCaseFromFixassignedToFinishfix(number)==1){
-                    return activityMapper.insertActivity(number, "接受该维修任务。维修状态：已解决 ← 维修中; 留言: "+ message , partner.getName(), 3, partner.getNum());
+                    return activityMapper.insertActivity(number, "解决该维修任务。状态：受理中 ← 维修中;维修状态：已解决 ← 维修中; 留言: "+ message , partner.getName(), 3, partner.getNum());
                 }else{
                     return 0;
                 }

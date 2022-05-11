@@ -61,7 +61,7 @@ public class CommunityService {
                     communityMapper.updateCommunityRemoveCompanyByNumber(number);
                     return 1;
                 }else{
-                    return 2;
+                    return 2;//名下还有投诉单
                 }
             }else{
                 return 0;//company不符

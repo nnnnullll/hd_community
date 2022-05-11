@@ -43,7 +43,7 @@ public interface CaseMapper {
     Case[] getNewCaseByCompanyNumber(String number);
 
 // 加急与逾期    
-    @Select("SELECT * FROM `case` where `case`.company=#{number} and `case`.emergency=1 or `case`.escalation=1 order by number asc;")
+    @Select("SELECT * FROM `case` where (`case`.company=#{number}) and (`case`.emergency=1 or `case`.escalation=1) order by number asc;")
     Case[] getEmergencyAndEscalationCaseByCompanyNumber(String number);
 
 // 获取close case的列表
@@ -77,7 +77,7 @@ public interface CaseMapper {
     Integer updateCaseFromFixassignedToInfix(Integer number);
     @Update("update `case` set `case`.fix_state=1, `case`.fix_assigned_to=null where `case`.number=#{number};")
     Integer updateCaseFromFixassignedToAwaitingfixAssigned(Integer number);
-    @Update("update `case` set `case`.fix_state=4 where `case`.number=#{number};")
+    @Update("update `case` set `case`.state=1,`case`.fix_state=4 where `case`.number=#{number};")
     Integer updateCaseFromFixassignedToFinishfix(Integer number);
     @Update("update `case` set `case`.state=5,`case`.escalation=0,`case`.emergency=0 where `case`.number=#{number};")
     Integer updateCaseFromClosed(Integer number);
@@ -235,7 +235,7 @@ public interface CaseMapper {
     @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=3 and `case`.fix_state=3;")
     Integer getInfix_numberCaseAmountByPartner(Integer number);
     //查InFix case amount 通过 household
-    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=3 and `case`.fix_state=4;")
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state!=5 and `case`.fix_state=4;")
     Integer getFixfinish_numberCaseAmountByPartner(Integer number);
     //查Resolved case amount 通过 household
     @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=5;")
