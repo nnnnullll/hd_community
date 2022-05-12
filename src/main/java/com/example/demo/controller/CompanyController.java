@@ -14,15 +14,15 @@ public class CompanyController {
     @Autowired
     CompanyService companyService;
     //插company
-    @PostMapping("/insertcompany")
-    public Integer insertCompany(
-        @RequestParam(value = "number") String number,
-        @RequestParam(value = "name") String name,
-        @RequestParam(value = "address") String address,
-        @RequestParam(value = "phone") String phone,
-        @RequestParam(value = "email") String email){
-        return companyService.insertCompany(number, name, address, phone, email);
-    }
+    // @PostMapping("/insertcompany")
+    // public Integer insertCompany(
+    //     @RequestParam(value = "number") String number,
+    //     @RequestParam(value = "name") String name,
+    //     @RequestParam(value = "address") String address,
+    //     @RequestParam(value = "phone") String phone,
+    //     @RequestParam(value = "email") String email){
+    //     return companyService.insertCompany(number, name, address, phone, email);
+    // }
 
     //插company
     @PostMapping("/updatecompany")
@@ -36,6 +36,7 @@ public class CompanyController {
 
     //type==1 通过number找company
     //type==2 partner通过relationship查维修公司合作的物业公司们
+    // type=3 获取所有非合作的物业公司
     @PostMapping("/getcompanies")
     public Company[] getCompanies(
         @RequestParam(value = "partner") Integer partner,

@@ -29,6 +29,7 @@ public class EmployeeController {
         return employeeService.insertEmployee(name, company, id, phone, email, admin);
     }
 
+     // type=1 更新个人信息  type=2 active/inactive复职离职 type=3 admin给予权限/授予权限 type=4 更改密码 type=5 重置密码
     @PostMapping("/updateemployee")
     public Integer updateemployee(
         @RequestParam(value = "number") Integer number,

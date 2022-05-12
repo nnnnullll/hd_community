@@ -18,9 +18,9 @@ public class HouseholdService {
     @Autowired
     CompanyMapper companyMapper;
 
-    public Integer insertHousehold(Integer community, Integer building,String room_number, String password){
-        return householdMapper.insertHousehold(community, building, room_number, password);
-    } 
+    // public Integer insertHousehold(Integer community, Integer building,String room_number, String password){
+    //     return householdMapper.insertHousehold(community, building, room_number, password);
+    // } 
 
     // type=1 更新个人信息 type=2 修改密码 type=3 重置密码
     public Integer updateHousehold(Integer number, String email, String phone,  Integer type, String password, String oldpassword){
@@ -28,6 +28,7 @@ public class HouseholdService {
             return householdMapper.updateHousehold(number, email, phone);
         }else if(type==2){
             if(householdMapper.validateHouseholdByPassword(number, oldpassword)==1){
+                System.out.println(password);
                 return householdMapper.updateHouseholdPassword(number, password);
             }else{
                 return 0;
@@ -40,7 +41,7 @@ public class HouseholdService {
 
     //查household 通过number(唯一一条记录)
     //查household 通过community number(多条记录)
-    public Household[] getHousehold(Integer type,Integer number,Integer community,String company){
+    public Household[] getHousehold(Integer type,Integer number,Integer community){
         switch(type){
             case 1: 
             Household[] household = new Household[1]; 
@@ -48,8 +49,6 @@ public class HouseholdService {
             return household;
             case 2:
             return householdMapper.getHouseholdByCommunity(community);
-            case 3:
-            return householdMapper.getHouseholdByCompany(company);
             default:
             return null;
         } 

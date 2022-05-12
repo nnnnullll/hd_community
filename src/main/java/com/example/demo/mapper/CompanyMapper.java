@@ -15,7 +15,7 @@ public interface CompanyMapper {
     Integer insertCompany(@Param("number") String number,@Param("name") String name,@Param("address") String address,@Param("phone") String phone,@Param("email") String email);
 
     // update company
-    @Update("update `company` set `company`.address= #{address},`company`.phone=#{phone},`company`.email=#{email} where `company`.number= #{number}")
+    @Update("update `company` set `company`.address= #{address},`company`.phone=#{phone},`company`.email=#{email} where `company`.number= #{number};")
     Integer updateCompany(@Param("number") String number,@Param("address") String address,@Param("phone") String phone,@Param("email") String email);
 
     //查cmmpany 通过number(唯一一条记录)

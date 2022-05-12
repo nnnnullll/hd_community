@@ -13,10 +13,12 @@ public class RelationshipService {
     public Integer changeRelationship(String company, Integer partner){
         if(relationshipMapper.getAmountByPartnerAndCompany(partner, company)>=1){
             if(relationshipMapper.getActiveByPartnerAndCompany(partner, company)==1){//解除合作
-                if(caseMapper.getCaseAmountByPartner(partner,company)==0)
+                if(caseMapper.getCaseAmountByPartner(partner,company)==0){
                     return relationshipMapper.updateInActiveByPartnerAndCompany(partner, company);
-                else
-                    return 0;    
+                }    
+                else{
+                    return 0; 
+                }     
             }else{//恢复合作
                 return relationshipMapper.updateActiveByPartnerAndCompany(partner, company);
             }

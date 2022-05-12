@@ -90,7 +90,7 @@ public class PartnerService {
         return partner;
     }
     //type=1 查company的合作维修公司
-    //type=2 所有维修公司
+    //type=2 非合作维修公司
     public partner[] getPartners(String company, Integer type){
         if( type == 1 ){
             Integer amount = relationshipMapper.getPartnerAmountFromRelationshipByCompany(company);
@@ -102,16 +102,12 @@ public class PartnerService {
             }
             return partners;
         } else if( type == 2 ){
-            Integer amount = partnerMapper.getNonePartnerAmount(company);
+            Integer amount = relationshipMapper.getNotPartnerAmountFromRelationshipByCompany(company);
+            Integer[] partnersnumber =new Integer[amount];
+            partnersnumber = relationshipMapper.getNotPartnerNumberFromRelationshipByCompany(company);
             partner[] partners = new partner[amount];
-            partners = partnerMapper.getNonePartner(company);
-            for(Integer k=0;k<amount;k++){
-                // 0-是合作 1-不是合作
-                if(relationshipMapper.getActiveByPartnerAndCompany(partners[k].getNum(), company)==1){
-                    partners[k].setIspartner(0);
-                }else{
-                    partners[k].setIspartner(1);
-                }
+            for(Integer i=0;i<amount;i++){
+                partners[i]=partnerMapper.getPartnerByNum(partnersnumber[i]);
             }
             return partners;
         }else{

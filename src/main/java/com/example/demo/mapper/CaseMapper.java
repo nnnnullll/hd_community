@@ -31,7 +31,7 @@ public interface CaseMapper {
     @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state!=5;")
     Integer getCaseAmountByEmployee(Integer number);
     @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.company=#{company} and `case`.state!=5;")
-    Integer getCaseAmountByPartner(Integer number,String comoany);
+    Integer getCaseAmountByPartner(Integer number,String company);
 
 //查ALL caselist 通过company number
     @Select("SELECT count(*) FROM `case` where `case`.company=#{number} order by number asc;")

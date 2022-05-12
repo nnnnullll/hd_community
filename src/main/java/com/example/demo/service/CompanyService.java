@@ -28,6 +28,9 @@ public class CompanyService {
 
     //插company
     public Integer updateCompany(String number,String address,String phone, String email){
+        System.out.println(address);
+        System.out.println(phone);
+        System.out.println(email);
         return companyMapper.updateCompany(number,address, phone, email);
     }
    

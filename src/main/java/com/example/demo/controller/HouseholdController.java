@@ -13,15 +13,16 @@ public class HouseholdController {
     @Autowired 
     HouseholdService householdService;
     //插household
-    @PostMapping("/inserthousehold")
-    public Integer inserthousehold(
-        @RequestParam(value = "community") Integer community,
-        @RequestParam(value = "building") Integer building,
-        @RequestParam(value = "room_number") String room_number,
-        @RequestParam(value = "password") String password){
-        return householdService.insertHousehold(community, building, room_number, password);
-    }
+    // @PostMapping("/inserthousehold")
+    // public Integer inserthousehold(
+    //     @RequestParam(value = "community") Integer community,
+    //     @RequestParam(value = "building") Integer building,
+    //     @RequestParam(value = "room_number") String room_number,
+    //     @RequestParam(value = "password") String password){
+    //     return householdService.insertHousehold(community, building, room_number, password);
+    // }
 
+    //type=1 更新个人信息 type=2 修改密码 type=3 重置密码
     @PostMapping("/updatehousehold")
     public Integer updatedhousehold(
         @RequestParam(value = "number") Integer number,
@@ -40,8 +41,7 @@ public class HouseholdController {
     public Household[] getHousehold(
         @RequestParam(value = "type") Integer type,
         @RequestParam(value = "number") Integer number,
-        @RequestParam(value = "community") Integer community,
-        @RequestParam(value = "company") String company){
-        return householdService.getHousehold(type, number, community,company);
+        @RequestParam(value = "community") Integer community){
+        return householdService.getHousehold(type, number, community);
     }
 }

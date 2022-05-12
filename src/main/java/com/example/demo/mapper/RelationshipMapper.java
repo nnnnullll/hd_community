@@ -34,9 +34,16 @@ public interface RelationshipMapper {
 
 
     //company看合作的维修公司
-    @Select("SELECT distinct partner FROM `relationship` where `relationship`.company=#{company}")
+    @Select("SELECT distinct partner FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=0")
     Integer[] getPartnerNumberFromRelationshipByCompany(@Param("company") String company);
     //查PartnerAmount 通过company
-    @Select("SELECT count(distinct partner) FROM `relationship` where `relationship`.company=#{company}")
+    @Select("SELECT count(distinct partner) FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=0")
     Integer getPartnerAmountFromRelationshipByCompany(@Param("company") String company);
+
+    //company看非合作的维修公司
+    @Select("SELECT distinct partner FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=1")
+    Integer[] getNotPartnerNumberFromRelationshipByCompany(@Param("company") String company);
+    //查PartnerAmount 通过company
+    @Select("SELECT count(distinct partner) FROM `relationship` where `relationship`.company=#{company} and `relationship`.active=1")
+    Integer getNotPartnerAmountFromRelationshipByCompany(@Param("company") String company);
 }

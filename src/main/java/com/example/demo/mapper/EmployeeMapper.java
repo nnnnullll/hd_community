@@ -54,7 +54,7 @@ public interface EmployeeMapper {
     Integer validateEmployeeByPassword(Integer username, String password);
 
     //login 核实employee 通过number & password
-    @Select("SELECT admin FROM `employee` where `employee`.number=#{username} and `employee`.active=0")
+    @Select("SELECT admin FROM `employee` where `employee`.number=#{username}")
     Integer getEmployeeAdminByNumber(Integer number);
     //login 核实employee 通过number & password
     @Select("SELECT active FROM `employee` where `employee`.number=#{username}")

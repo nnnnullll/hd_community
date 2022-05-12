@@ -18,4 +18,4 @@ public class RelationshipController {
     @RequestParam(value = "partner") Integer partner){
         return relationshipService.changeRelationship(company, partner);
     } 
-}
+} 
