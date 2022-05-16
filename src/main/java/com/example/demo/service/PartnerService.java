@@ -63,13 +63,10 @@ public class PartnerService {
                 return 0;
             }
         }else if(type==3){
-            partner partner = new partner();
-            partner.setNum(Integer.valueOf(num));;
-            partner.setActive(active);
-            if(relationshipMapper.updateInActiveByPartner(Integer.valueOf(num))==1){
-                return partnerMapper.updatePartnerActive(partner);
+            if(partnerMapper.getPartnerByNum(Integer.valueOf(num)).getActive()==1){
+                return partnerMapper.updatePartnerActive(0,Integer.valueOf(num));
             }else{
-                return 0;
+                return partnerMapper.updatePartnerActive(1,Integer.valueOf(num));
             }
         }else{
             return partnerMapper.updatePartnerResetPassword(Integer.valueOf(num));

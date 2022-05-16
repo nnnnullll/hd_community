@@ -25,8 +25,8 @@ public interface PartnerMapper {
     Integer updatePartnerPassword(@Param("partner") partner partner);
     @Update("update `partner` set  `partner`.password = '123456' where `partner`.num = #{partner.num}")
     Integer updatePartnerResetPassword(Integer num);
-    @Update("update `partner` set  `partner`.active = #{partner.active} where `partner`.num = #{partner.num}")
-    Integer updatePartnerActive(@Param("partner") partner partner);
+    @Update("update `partner` set  `partner`.active = #{active} where `partner`.num = #{num}")
+    Integer updatePartnerActive(Integer active,Integer num);
 
     //查partner 通过number(唯一一条记录)
     @Select("SELECT * FROM `partner` where `partner`.num=#{num}")

@@ -18,6 +18,12 @@ public interface CaseMapper {
     Case getCaseByNumber(Integer number);
 
 //caselist 处理中（非close）  
+    @Select("SELECT count(*) FROM `case` where `case`.household=#{number} and `case`.state!=5 order by number asc;")
+    Integer getAmountCaseByHouseholdNumber(Integer number);
+    @Select("SELECT count(*) FROM `case` where `case`.assigned_to=#{number} and `case`.state!=5 order by number asc;")
+    Integer getAmountCaseByEmployeeNumber(Integer number);
+    @Select("SELECT count(*) FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state!=5 order by number asc;")
+    Integer getAmountCaseByPartnerNumber(Integer number);
     @Select("SELECT * FROM `case` where `case`.household=#{number} and `case`.state!=5 order by number asc;")
     Case[] getCaseByHouseholdNumber(Integer number);
     @Select("SELECT * FROM `case` where `case`.assigned_to=#{number} and `case`.state!=5 order by number asc;")
@@ -38,11 +44,15 @@ public interface CaseMapper {
     Integer getCaseAmountByCompanyNumber(String number);
     @Select("SELECT * FROM `case` where `case`.company=#{number} order by number asc;")
     Case[] getCaseByCompanyNumber(String number);
-// New case    
+// New case
+    @Select("SELECT count(*) FROM `case` where `case`.company=#{number}  and `case`.state=0 order by number asc;")
+    Integer getAmountNewCaseByCompanyNumber(String number);    
     @Select("SELECT * FROM `case` where `case`.company=#{number}  and `case`.state=0 order by number asc;")
     Case[] getNewCaseByCompanyNumber(String number);
 
-// 加急与逾期    
+// 加急与逾期   
+    @Select("SELECT count(*) FROM `case` where (`case`.company=#{number}) and (`case`.emergency=1 or `case`.escalation=1) order by number asc;")
+    Integer getAmountEmergencyAndEscalationCaseByCompanyNumber(String number);
     @Select("SELECT * FROM `case` where (`case`.company=#{number}) and (`case`.emergency=1 or `case`.escalation=1) order by number asc;")
     Case[] getEmergencyAndEscalationCaseByCompanyNumber(String number);
 

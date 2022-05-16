@@ -13,7 +13,7 @@ public class CaseController {
     @Autowired
     CaseService caseService;
     //插入case
-    @PostMapping("/insertcase")
+    @PostMapping("/insertcase") 
     public Integer insertcase(
         @RequestParam(value = "subject") String subject,
         @RequestParam(value = "description") String description,
@@ -24,23 +24,23 @@ public class CaseController {
         return caseService.insertCase(subject, description, type, created_role, created_by, household);
     }
 
-    // // 查case 通过case number
-    // @PostMapping("/getcasebynumber")
-    // public CaseDetail getCaseByNumber(
-    //     @RequestParam(value = "number") Integer number,
-    //     @RequestParam(value = "usertype") Integer type) {
-    //     return caseService.getCaseByNumber(number,type);
-    // }
-    // @PostMapping("/getcommunityoptionbycompany")
-    // public option[] getCommunityOptionByCompany(
-    //     @RequestParam(value = "company") String company) {
-    //     return caseService.getCommunityOption(company);
-    // }
-    // @PostMapping("/gethouseholdoptionbycommunity")
-    // public option[] getHouseholdOptionByCommunity(
-    //     @RequestParam(value = "community") Integer community) {
-    //     return caseService.getHouseholdOption(community);
-    // }
+    // 查case 通过case number
+    @PostMapping("/getcasebynumber")
+    public CaseDetail getCaseByNumber(
+        @RequestParam(value = "number") Integer number,
+        @RequestParam(value = "usertype") Integer type) {
+        return caseService.getCaseByNumber(number,type);
+    }
+    @PostMapping("/getcommunityoptionbycompany")
+    public option[] getCommunityOptionByCompany(
+        @RequestParam(value = "company") String company) {
+        return caseService.getCommunityOption(company);
+    }
+    @PostMapping("/gethouseholdoptionbycommunity")
+    public option[] getHouseholdOptionByCommunity(
+        @RequestParam(value = "community") Integer community) {
+        return caseService.getHouseholdOption(community);
+    }
 
     // 更新case 通过case number
     @PostMapping("/updatecasebynumber")

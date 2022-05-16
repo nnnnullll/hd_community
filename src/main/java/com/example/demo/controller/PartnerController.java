@@ -53,7 +53,7 @@ public class PartnerController {
     } 
 
      //type==1 company通过relationship查物业公司合作的维修公司们
-     @PostMapping("/getpartners")
+     @PostMapping("/getpartners") 
      public partner[] getPartners(
          @RequestParam(value = "company") String company,
          @RequestParam(value = "type") Integer type){

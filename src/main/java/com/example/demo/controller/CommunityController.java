@@ -44,7 +44,7 @@ public class CommunityController {
         return communityService.getCommunityDetail(number);
     }
 
-    @PostMapping("/updatecommunity")
+    @PostMapping("/updatecommunity") 
     public Integer updateCommunity(
         @RequestParam(value = "type") Integer type,
         @RequestParam(value = "number") Integer number,

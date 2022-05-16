@@ -126,11 +126,44 @@ public class CaseService {
     // 3-partner  8-closecase-h
     public Case[] getCaseList(Integer number,Integer type, String company){
         if(type == 1){
-            return caseMapper.getCaseByEmployeeNumber(number);
+            Integer n = caseMapper.getAmountCaseByEmployeeNumber(number);
+            Case[] caset = new Case[n];
+            caset = caseMapper.getCaseByEmployeeNumber(number);
+            for(Integer i =0 ; i<n ; i++){
+                caset[i].setCommunity_n(communityMapper.getCommunityByNumber(caset[i].getCommunity()).getName());
+                caset[i].setCompany_n(companyMapper.getCompanyByNumber(caset[i].getCompany()).getName());
+                if(caset[i].getAssigned_to()!=null)
+                    caset[i].setAssigned_to_n(employeeMapper.getEmployeeByNumber(caset[i].getAssigned_to()).getName());
+                if(caset[i].getFix_assigned_to()!=null)
+                    caset[i].setFix_assigned_to_n(partnerMapper.getPartnerByNum(caset[i].getFix_assigned_to()).getName());
+            }
+            return caset;
         }else if(type == 2){
-            return caseMapper.getCaseByHouseholdNumber(number);
+            Integer n = caseMapper.getAmountCaseByHouseholdNumber(number);
+            Case[] caset = new Case[n];
+            caset = caseMapper.getCaseByHouseholdNumber(number);
+            for(Integer i =0 ; i<n ; i++){
+                caset[i].setCommunity_n(communityMapper.getCommunityByNumber(caset[i].getCommunity()).getName());
+                caset[i].setCompany_n(companyMapper.getCompanyByNumber(caset[i].getCompany()).getName());
+                if(caset[i].getAssigned_to()!=null)
+                    caset[i].setAssigned_to_n(employeeMapper.getEmployeeByNumber(caset[i].getAssigned_to()).getName());
+                if(caset[i].getFix_assigned_to()!=null)
+                    caset[i].setFix_assigned_to_n(partnerMapper.getPartnerByNum(caset[i].getFix_assigned_to()).getName());
+            }
+            return caset;
         }else if(type==3){
-            return caseMapper.getCaseByPartnerNumber(number);
+            Integer n = caseMapper.getAmountCaseByPartnerNumber(number);
+            Case[] caset = new Case[n];
+            caset = caseMapper.getCaseByPartnerNumber(number);
+            for(Integer i =0 ; i<n ; i++){
+                caset[i].setCommunity_n(communityMapper.getCommunityByNumber(caset[i].getCommunity()).getName());
+                caset[i].setCompany_n(companyMapper.getCompanyByNumber(caset[i].getCompany()).getName());
+                if(caset[i].getAssigned_to()!=null)
+                    caset[i].setAssigned_to_n(employeeMapper.getEmployeeByNumber(caset[i].getAssigned_to()).getName());
+                if(caset[i].getFix_assigned_to()!=null)
+                    caset[i].setFix_assigned_to_n(partnerMapper.getPartnerByNum(caset[i].getFix_assigned_to()).getName());
+            }
+            return caset;
         }else if(type==4){
             Integer n = caseMapper.getCaseAmountByCompanyNumber(company);
             Case[] caset = new Case[n];
@@ -144,7 +177,18 @@ public class CaseService {
             }
             return caset;
         }else if(type==5){
-            return caseMapper.getEmergencyAndEscalationCaseByCompanyNumber(company);
+            Integer n = caseMapper.getAmountEmergencyAndEscalationCaseByCompanyNumber(company);
+            Case[] caset = new Case[n];
+            caset = caseMapper.getEmergencyAndEscalationCaseByCompanyNumber(company);
+            for(Integer i =0 ; i<n ; i++){
+                caset[i].setCommunity_n(communityMapper.getCommunityByNumber(caset[i].getCommunity()).getName());
+                caset[i].setCompany_n(companyMapper.getCompanyByNumber(caset[i].getCompany()).getName());
+                if(caset[i].getAssigned_to()!=null)
+                    caset[i].setAssigned_to_n(employeeMapper.getEmployeeByNumber(caset[i].getAssigned_to()).getName());
+                if(caset[i].getFix_assigned_to()!=null)
+                    caset[i].setFix_assigned_to_n(partnerMapper.getPartnerByNum(caset[i].getFix_assigned_to()).getName());
+            }
+            return caset;
         }else if(type==6){
             Integer n = caseMapper.getCloseCaseAmountByEmployeeNumber(number);
             Case[] caset = new Case[n];
@@ -185,7 +229,18 @@ public class CaseService {
             }
             return caset;
         }else{
-            return caseMapper.getNewCaseByCompanyNumber(company);
+            Integer n = caseMapper.getAmountNewCaseByCompanyNumber(company);;
+            Case[] caset = new Case[n];
+            caset = caseMapper.getNewCaseByCompanyNumber(company);
+            for(Integer i =0 ; i<n ; i++){
+                caset[i].setCommunity_n(communityMapper.getCommunityByNumber(caset[i].getCommunity()).getName());
+                caset[i].setCompany_n(companyMapper.getCompanyByNumber(caset[i].getCompany()).getName());
+                if(caset[i].getAssigned_to()!=null)
+                    caset[i].setAssigned_to_n(employeeMapper.getEmployeeByNumber(caset[i].getAssigned_to()).getName());
+                if(caset[i].getFix_assigned_to()!=null)
+                    caset[i].setFix_assigned_to_n(partnerMapper.getPartnerByNum(caset[i].getFix_assigned_to()).getName());
+            }
+            return caset;
         }
     }
 
