@@ -4,7 +4,6 @@ package com.example.demo.enity;
 public class Activity {
     Integer number;
     Integer case_number;
-    Integer type;
     String message;
     Integer updated_role;
     Integer updated_by;
@@ -28,12 +27,6 @@ public class Activity {
     }
     public void setCase_number(Integer case_number) {
         this.case_number = case_number;
-    }
-    public Integer getType() {
-        return type;
-    }
-    public void setType(Integer type) {
-        this.type = type;
     }
     public String getMessage() {
         return message;

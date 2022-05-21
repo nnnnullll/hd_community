@@ -61,16 +61,16 @@ public class CommunityService {
                     communityMapper.updateCommunityRemoveCompanyByNumber(number);
                     return 1;
                 }else{
-                    return 2;//名下还有投诉单
+                    return 2;//名下还有投诉单 解决完才能解除合作
                 }
             }else{
-                return 0;//company不符
+                return 0;//company不符 人家合作物业不是你
             }
         }else if(type==2){
-            if(communityMapper.validateInactiveCommunityByNumber(number)==1){
+            if(communityMapper.validateInactiveCommunityByNumber(number)==1){//有没有合作物业
                 return communityMapper.updateCommunityAddCompanyByNumber(company,number);
             }else{
-                return 0;// company不是空的
+                return 0;// company不是空的 已经有合作物业了
             }
         }else{
             return 0;

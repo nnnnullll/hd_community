@@ -57,7 +57,7 @@ public class EmployeeService {
                 if(caseMapper.getCaseAmountByEmployee(number)==0)//名下无处理中case
                     return employeeMapper.updateEmployeeInActive(number);
                 else
-                    return 0;    
+                    return 0; //名下有未处理完的case,处理完或者移走再离职   
             }
         }else if(type==3){
             if(employeeMapper.getEmployeeAdminByNumber(number)==0){
