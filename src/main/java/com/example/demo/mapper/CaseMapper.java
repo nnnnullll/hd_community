@@ -70,6 +70,20 @@ public interface CaseMapper {
     @Select("SELECT * FROM `case` where `case`.fix_assigned_to=#{number} and `case`.state=5 order by number asc;")
     Case[] getCloseCaseByPartnerNumber(Integer number);
 
+//更新前校验case
+    @Select("SELECT count(*) FROM `case` where `case`.number=#{number} and `case`.state=0;")
+    Integer validateCaseisNew(Integer number); 
+    @Select("SELECT count(*) FROM `case` where `case`.number=#{number} and `case`.state=1;")
+    Integer validateCaseisInProgress(Integer number); 
+    @Select("SELECT count(*) FROM `case` where `case`.number=#{number} and `case`.state=2;")
+    Integer validateCaseisAwaitingInfo(Integer number); 
+    @Select("SELECT count(*) FROM `case` where `case`.number=#{number} and `case`.state=3;")
+    Integer validateCaseisInFix(Integer number); 
+    @Select("SELECT count(*) FROM `case` where `case`.number=#{number} and `case`.state=4;")
+    Integer validateCaseisResolved(Integer number); 
+    @Select("SELECT count(*) FROM `case` where `case`.number=#{number} and `case`.state=5;")
+    Integer validateCaseisClosed(Integer number); 
+
 //case update
     @Update("update `case` set `case`.state=1,`case`.assigned_to=#{assigned_to} where `case`.number=#{number};")
     Integer updateCaseFromNewToInProgree(Integer number,Integer assigned_to);
