@@ -253,11 +253,11 @@ public class CaseService {
             Employee employee = new Employee();
             employee = employeeMapper.getEmployeeByNumber(updateduser);
             // type=1-assigned to(new->in progress)
-            if(type == 1){
+            if(type == 1&&caseMapper.validateCaseisClosed(number)==0){
                 Employee emp = new Employee();
                 emp = employeeMapper.getEmployeeByNumber(assigned_to);
                 if(casetemp.getState()==0){
-                    if(caseMapper.updateCaseFromNewToInProgree(number,assigned_to)==1&&caseMapper.validateCaseisNew(number)==1){
+                    if(caseMapper.updateCaseFromNewToInProgree(number,assigned_to)==1){
                         return activityMapper.insertActivity(number, "投诉单分配给员工: "+ emp.getName() +"; 状态：受理中 ← 新建" , employee.getName(), 1 , employee.getNumber());
                     }else{
                         return 10;
