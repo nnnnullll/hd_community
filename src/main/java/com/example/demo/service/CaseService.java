@@ -253,17 +253,17 @@ public class CaseService {
             Employee employee = new Employee();
             employee = employeeMapper.getEmployeeByNumber(updateduser);
             // type=1-assigned to(new->in progress)
-            if(type == 1&&caseMapper.validateCaseisNew(number)==1){
+            if(type == 1){
                 Employee emp = new Employee();
                 emp = employeeMapper.getEmployeeByNumber(assigned_to);
                 if(casetemp.getState()==0){
-                    if(caseMapper.updateCaseFromNewToInProgree(number,assigned_to)==1){
+                    if(caseMapper.updateCaseFromNewToInProgree(number,assigned_to)==1&&caseMapper.validateCaseisNew(number)==1){
                         return activityMapper.insertActivity(number, "投诉单分配给员工: "+ emp.getName() +"; 状态：受理中 ← 新建" , employee.getName(), 1 , employee.getNumber());
                     }else{
-                        return 0;
+                        return 10;
                     }
                 }else{
-                    if(caseMapper.updateCaseAssignedTo(number,assigned_to)==1){
+                    if(caseMapper.updateCaseAssignedTo(number,assigned_to)==1&&caseMapper.validateCaseisClosed(number)==0){
                         return activityMapper.insertActivity(number, "投诉单分配给员工: "+ emp.getName()  , employee.getName(), 1 , employee.getNumber());
                     }else{
                         return 0;
@@ -271,7 +271,7 @@ public class CaseService {
                 }
             }
             // type=2-awaiting info(in progress->awaiting info)
-            else if(type == 2&&caseMapper.validateCaseisInProgress(number)==1){
+            else if(type == 2&&caseMapper.validateCaseisClosed(number)==0){
                 if(caseMapper.updateCaseFromInProgreeToAwaitingInfo(number)==1){
                     return activityMapper.insertActivity(number, "状态：待补充 ← 受理中；留言：" + message , employee.getName(), 1 , employee.getNumber());
                 }else{
@@ -280,7 +280,7 @@ public class CaseService {
             }
             // type=3 维修中 state: in progress->in fix, fix_state:已分配 ← 空/待分配/已解决; casenumber&type&message&updated_usernumber
             //fix_state: 0-default(when state=3) 1-待分配 2-已分配 3-维修中 4-已解决
-            else if(type == 3&&caseMapper.validateCaseisInProgress(number)==1){
+            else if(type == 3&&caseMapper.validateCaseisClosed(number)==0){
                 if(caseMapper.updateCaseFromInProgreeToInFix(number, assigned_to)==1){
                     partner partner = new partner();
                     partner = partnerMapper.getPartnerByNum(assigned_to);
@@ -299,7 +299,7 @@ public class CaseService {
                 }
             }
             // type=4 提供解决方案 resolved; in progress/in fix->resolved
-            else if(type == 4&&(caseMapper.validateCaseisInFix(number)==1||caseMapper.validateCaseisInProgress(number)==1)){
+            else if(type == 4&&caseMapper.validateCaseisClosed(number)==0){
                 if(caseMapper.updateCaseFromToResolved(number, message)==1){
                     if(casetemp.getState()==1){
                         return activityMapper.insertActivity(number, "状态：已解决 ← 受理中；解决方案：" + message, employee.getName(), 1 , employee.getNumber());
@@ -325,7 +325,7 @@ public class CaseService {
             partner partner = new partner();
             partner = partnerMapper.getPartnerByNum(updateduser);
             // type=5 接收维修单 维修状态：维修中 ← 已分配
-            if(type==5&&caseMapper.validateCaseisInFix(number)==1){
+            if(type==5&&caseMapper.validateCaseisClosed(number)==0){
                 if(caseMapper.updateCaseFromFixassignedToInfix(number)==1){
                     return activityMapper.insertActivity(number, "接受该维修任务。维修状态：维修中 ← 已分配" , partner.getName(), 3, partner.getNum());
                 }else{
@@ -333,7 +333,7 @@ public class CaseService {
                 }
             }
             // type=6 拒绝维修单 维修状态：待分配 ← 已分配
-            else if(type==6&&caseMapper.validateCaseisInFix(number)==1){
+            else if(type==6&&caseMapper.validateCaseisClosed(number)==0){
                 if(caseMapper.updateCaseFromFixassignedToAwaitingfixAssigned(number)==1){
                     return activityMapper.insertActivity(number, "拒绝该维修任务。维修状态：待分配 ← 已分配" , partner.getName(), 3, partner.getNum());
                 }else{
@@ -341,7 +341,7 @@ public class CaseService {
                 }
             }
             //  维修结束 维修状态：已解决 ← 维修中
-            else if(type==7&&caseMapper.validateCaseisInFix(number)==1){
+            else if(type==7&&caseMapper.validateCaseisClosed(number)==0){
                 if(caseMapper.updateCaseFromFixassignedToFinishfix(number)==1){
                     return activityMapper.insertActivity(number, "解决该维修任务。状态：受理中 ← 维修中;维修状态：已解决 ← 维修中; 留言: "+ message , partner.getName(), 3, partner.getNum());
                 }else{
